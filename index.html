@@ -345,7 +345,7 @@
         }
         .marathi-card .caption .en { font-size:0.9rem; color:#b0b0b0; margin-top:0.3rem; font-style:italic; }
 
-        /* Gallery - static with admin support */
+        /* Gallery - static */
         .image-gallery {
             display:grid;
             grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
@@ -395,20 +395,8 @@
             font-size:0.7rem; font-weight:700;
             box-shadow:0 0 20px rgba(255,215,0,0.3);
         }
-        /* Admin delete button for gallery */
-        .gallery-item .admin-delete {
-            display:none;
-            position:absolute; top:10px; left:10px;
-            background:rgba(200,0,0,0.8);
-            color:white; border:none; border-radius:50%;
-            width:28px; height:28px;
-            font-size:14px; cursor:pointer;
-            align-items:center; justify-content:center;
-            z-index:10;
-        }
-        .admin-mode .gallery-item .admin-delete { display:flex; }
 
-        /* Videos - static with admin support */
+        /* Videos - static */
         .video-gallery {
             display:grid;
             grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
@@ -438,18 +426,6 @@
             font-size:0.7rem; font-weight:600;
             box-shadow:0 2px 8px rgba(0,0,0,0.3);
         }
-        /* Admin delete button for videos */
-        .video-item .admin-delete {
-            display:none;
-            position:absolute; top:10px; left:10px;
-            background:rgba(200,0,0,0.8);
-            color:white; border:none; border-radius:50%;
-            width:28px; height:28px;
-            font-size:14px; cursor:pointer;
-            align-items:center; justify-content:center;
-            z-index:10;
-        }
-        .admin-mode .video-item .admin-delete { display:flex; }
 
         /* Director */
         .director-photo {
@@ -553,129 +529,6 @@
         ::-webkit-scrollbar { width:8px; }
         ::-webkit-scrollbar-track { background:#0a0618; }
         ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:4px; box-shadow:0 0 20px rgba(255,215,0,0.3); }
-
-        /* ============================================================ */
-        /* ADMIN PANEL STYLES */
-        /* ============================================================ */
-        .admin-lock {
-            position:fixed; bottom:20px; left:20px;
-            color:rgba(255,215,0,0.15);
-            font-size:1.2rem;
-            cursor:pointer;
-            transition:var(--transition);
-            z-index:999;
-        }
-        .admin-lock:hover { color:var(--gold); }
-
-        .admin-panel {
-            display:none;
-            position:fixed;
-            top:50%; left:50%;
-            transform:translate(-50%, -50%);
-            background:rgba(10,6,24,0.95);
-            backdrop-filter:blur(12px);
-            border:2px solid var(--gold);
-            border-radius:var(--radius);
-            padding:2rem;
-            max-width:500px;
-            width:90%;
-            z-index:9999;
-            box-shadow:0 0 60px rgba(0,0,0,0.8);
-        }
-        .admin-panel.visible { display:block; }
-
-        .admin-panel h2 {
-            color:var(--gold);
-            font-family:var(--font-serif);
-            margin-bottom:1rem;
-            text-align:center;
-        }
-
-        .admin-panel .admin-input {
-            width:100%;
-            padding:0.8rem 1rem;
-            margin-bottom:1rem;
-            border:2px solid rgba(255,215,0,0.2);
-            border-radius:10px;
-            background:rgba(255,255,255,0.05);
-            color:white;
-            font-size:1rem;
-        }
-        .admin-panel .admin-input:focus {
-            border-color:var(--gold);
-            outline:none;
-        }
-
-        .admin-panel .admin-btn {
-            width:100%;
-            padding:0.8rem;
-            border:none;
-            border-radius:10px;
-            background:var(--gold);
-            color:#0a0618;
-            font-weight:700;
-            font-size:1rem;
-            cursor:pointer;
-            transition:var(--transition);
-            margin-bottom:0.5rem;
-        }
-        .admin-panel .admin-btn:hover { transform:scale(1.02); box-shadow:0 0 20px rgba(255,215,0,0.3); }
-
-        .admin-panel .admin-close {
-            position:absolute; top:10px; right:15px;
-            color:white; font-size:1.5rem;
-            cursor:pointer;
-            background:none; border:none;
-            transition:var(--transition);
-        }
-        .admin-panel .admin-close:hover { color:var(--gold); transform:rotate(90deg); }
-
-        .admin-panel .admin-section {
-            border-top:1px solid rgba(255,215,0,0.1);
-            padding-top:1rem;
-            margin-top:1rem;
-        }
-        .admin-panel .admin-section-title {
-            color:#b0b0b0;
-            font-size:0.9rem;
-            font-weight:600;
-            margin-bottom:0.5rem;
-            text-transform:uppercase;
-            letter-spacing:1px;
-        }
-
-        .admin-overlay {
-            display:none;
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.6);
-            z-index:9998;
-        }
-        .admin-overlay.visible { display:block; }
-
-        .admin-panel .status-msg {
-            text-align:center;
-            margin-top:0.5rem;
-            font-size:0.9rem;
-            color:var(--gold);
-        }
-
-        /* Social Links - Icons only */
-        .social-links { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
-        .social-link {
-            display:inline-flex; align-items:center; justify-content:center;
-            width:50px; height:50px;
-            border-radius:50%;
-            color:white; font-size:1.3rem; text-decoration:none;
-            transition:var(--transition);
-            box-shadow:0 4px 12px rgba(0,0,0,0.2);
-        }
-        .social-link:hover { transform:translateY(-4px) scale(1.08); box-shadow:0 10px 30px rgba(0,0,0,0.3); }
-        .social-link.whatsapp { background:#25D366; }
-        .social-link.telegram { background:#0088cc; }
-        .social-link.phone { background:#c0392b; }
-        .social-link.email { background:#ea4335; }
-        .social-link.instagram { background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-        .social-link.facebook { background:#1877f2; }
     </style>
 </head>
 <body>
@@ -692,49 +545,6 @@
 
 <!-- Toast -->
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">Success!</span></div>
-
-<!-- Admin Lock (click to open admin panel) -->
-<div class="admin-lock" id="adminLock" title="Admin Panel (Click to enter)">
-    <i class="fas fa-lock"></i>
-</div>
-
-<!-- Admin Overlay -->
-<div class="admin-overlay" id="adminOverlay"></div>
-
-<!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-    <button class="admin-close" id="adminClose"><i class="fas fa-times"></i></button>
-    <h2><i class="fas fa-shield-alt"></i> Admin Panel</h2>
-    
-    <div id="adminLogin">
-        <input type="password" class="admin-input" id="adminPassword" placeholder="Enter Password" />
-        <button class="admin-btn" id="adminLoginBtn">Unlock</button>
-        <div class="status-msg" id="loginStatus"></div>
-    </div>
-
-    <div id="adminContent" style="display:none;">
-        <div class="admin-section">
-            <div class="admin-section-title"><i class="fas fa-image"></i> Gallery</div>
-            <input type="text" class="admin-input" id="newImageUrl" placeholder="Paste image URL here" />
-            <button class="admin-btn" id="addImageBtn">+ Add Image to Gallery</button>
-        </div>
-
-        <div class="admin-section">
-            <div class="admin-section-title"><i class="fas fa-video"></i> Videos</div>
-            <input type="text" class="admin-input" id="newVideoUrl" placeholder="Paste YouTube embed URL here" />
-            <button class="admin-btn" id="addVideoBtn">+ Add Video to Gallery</button>
-        </div>
-
-        <div class="admin-section">
-            <div class="admin-section-title"><i class="fas fa-info-circle"></i> Instructions</div>
-            <p style="color:#b0b0b0; font-size:0.85rem; text-align:center;">
-                Click the <i class="fas fa-trash-alt" style="color:#e74c3c;"></i> button on any image or video to delete it.
-            </p>
-        </div>
-        
-        <div class="status-msg" id="adminStatus"></div>
-    </div>
-</div>
 
 <!-- Navbar -->
 <nav class="navbar">
@@ -801,7 +611,7 @@
             <div class="grid-2col">
                 <div>
                     <h3><i class="fas fa-address-card" style="color:var(--gold);"></i> Get in Touch</h3>
-                    <p><i class="fas fa-phone" style="color:var(--teal);"></i> +91 9221838267 | +91 9011395913</p>
+                    <p><i class="fas fa-phone" style="color:var(--teal);"></i> +91 9221838267 | +91 9011395913 | +91 7709935795</p>
                     <p><i class="fas fa-envelope" style="color:var(--pink);"></i> shreeparthacademy2009@gmail.com</p>
                     <p><i class="fas fa-map-marker-alt" style="color:var(--purple);"></i> Ground Floor, Tryambak Heaven 2, Beside Of Holy Spirit High School, Surval Chowk, Midc Shirgaon, Badlapur (E).</p>
                 </div>
@@ -902,7 +712,7 @@
             <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-user-tie"></i> From Director's Desk</h3>
             <img src="https://i.postimg.cc/vcSn6zv5/file-0000000048b0720b861f556150fbb74b.png" alt="Director" class="director-photo" />
             <p style="font-size:1.2rem; font-weight:600;">Mr. Swapnil Kalaskar</p>
-            <p style="max-width:800px; margin:0.5rem auto;">With over 15 years of experience in education, our director envisions a learning environment where every child discovers their true potential. He believes in holistic development that goes beyond textbooks, fostering critical thinking, creativity, and moral values.</p>
+            <p style="max-width:800px; margin:0.5rem auto;">With over <strong>25 years</strong> of experience in education, our director envisions a learning environment where every child discovers their true potential. He believes in holistic development that goes beyond textbooks, fostering critical thinking, creativity, and moral values.</p>
             <p style="font-style:italic; color:var(--gold); font-size:1.1rem;">"We are not competitors; we are sculptors of future leaders."</p>
         </div>
 
@@ -962,7 +772,6 @@
                 <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid var(--purple);"><strong>11th & 12th Commerce (State Board & CBSE)</strong><br>In-depth study of Accountancy, Economics, Business Studies, and more.</li>
                 <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid #f39c12;"><strong>Foundation Courses (8th & 9th)</strong><br>Strong foundation building for future competitive exams.</li>
                 <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid #e74c3c;"><strong>Spoken English & Personality Development</strong><br>Enhance communication skills and overall personality.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid #1abc9c;"><strong>Abacus & Vedic Maths</strong><br>Mental maths and speed calculation techniques.</li>
             </ul>
             <p class="mt-2">Each course is designed with a focus on conceptual clarity, regular assessments, and individual attention. We also conduct periodic parent-teacher meetings to track progress.</p>
         </div>
@@ -992,7 +801,7 @@
     <div id="galleryPage" class="page">
         <h2 class="section-title"><i class="fas fa-images"></i> Premium Image Gallery</h2>
         <div class="image-gallery" id="imageGallery">
-            <!-- Gallery items will be injected here by JavaScript -->
+            <!-- Gallery items injected by JavaScript -->
         </div>
     </div>
 
@@ -1000,7 +809,7 @@
     <div id="videosPage" class="page">
         <h2 class="section-title"><i class="fas fa-video"></i> Video Gallery</h2>
         <div class="video-gallery" id="videoGallery">
-            <!-- Video items will be injected here by JavaScript -->
+            <!-- Video items injected by JavaScript -->
         </div>
     </div>
 
@@ -1008,11 +817,11 @@
     <div id="enquiryPage" class="page">
         <h2 class="section-title"><i class="fas fa-envelope"></i> Enquiry Form</h2>
         <div class="card card-premium" style="max-width:700px; margin:0 auto;">
-            <form id="enquiryForm" onsubmit="event.preventDefault(); showToast('✅ Enquiry submitted! We will contact you soon.');">
-                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your Name" /></div>
-                <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com" /></div>
-                <div class="form-group"><label>Phone</label><input type="tel" placeholder="+91 9876543210" /></div>
-                <div class="form-group"><label>Message</label><textarea rows="4" placeholder="I would like to know more about your courses."></textarea></div>
+            <form id="enquiryForm" onsubmit="sendToWhatsApp(event)">
+                <div class="form-group"><label>Full Name</label><input type="text" id="enqName" placeholder="Your Name" required /></div>
+                <div class="form-group"><label>Email</label><input type="email" id="enqEmail" placeholder="your@email.com" required /></div>
+                <div class="form-group"><label>Phone</label><input type="tel" id="enqPhone" placeholder="+91 9876543210" required /></div>
+                <div class="form-group"><label>Message</label><textarea id="enqMessage" rows="4" placeholder="I would like to know more about your courses." required></textarea></div>
                 <button type="submit" class="btn-gold"><i class="fas fa-paper-plane"></i> Send Enquiry</button>
             </form>
         </div>
@@ -1025,7 +834,7 @@
             <div>
                 <div class="card card-premium">
                     <h3><i class="fas fa-hand-holding-usd" style="color:var(--gold);"></i> Make a Payment</h3>
-                    <div class="form-group"><label>Amount (₹)</label><input type="number" value="5000" /></div>
+                    <div class="form-group"><label>Amount (₹)</label><input type="number" id="paymentAmount" placeholder="Enter amount" /></div>
                     <div class="form-group"><label>Payment For</label>
                         <select>
                             <option>Tuition Fees</option>
@@ -1034,7 +843,9 @@
                             <option>Other</option>
                         </select>
                     </div>
-                    <button class="btn-gold" onclick="showToast('💳 Payment initiated! Please use UPI or Bank Transfer to complete.')"><i class="fas fa-lock"></i> Pay Now</button>
+                    <a href="upi://pay?pa=shreeparthacademy2009-2@okaxis&pn=Shree%20Parth%20Academy&cu=INR" target="_blank" class="btn-gold" style="display:inline-flex; align-items:center; gap:10px; margin-top:0.5rem;">
+                        <i class="fas fa-lock"></i> Pay Now (UPI)
+                    </a>
                 </div>
             </div>
             <div>
@@ -1055,12 +866,11 @@
                     </div>
                     <div class="mt-2">
                         <h4 style="color:var(--gold);"><i class="fas fa-university"></i> Bank Transfer Details</h4>
-                        <div class="bank-details">
-                            <p><strong>Bank Name:</strong> HDFC Bank</p>
-                            <p><strong>Account Name:</strong> Shree Parth Academy</p>
-                            <p><strong>Account Number:</strong> 1234567890</p>
-                            <p><strong>IFSC Code:</strong> HDFC0001234</p>
-                            <p><strong>Branch:</strong> Badlapur (E), Maharashtra</p>
+                        <div class="bank-details" id="bankDetailsContainer">
+                            <p><strong>Bank Name:</strong> State Bank of India</p>
+                            <p><strong>Account Number:</strong> 38616877754</p>
+                            <p><strong>IFSC Code:</strong> SBIN0021999</p>
+                            <p><strong>Branch:</strong> Katrap, Badlapur (E)</p>
                         </div>
                     </div>
                 </div>
@@ -1080,25 +890,24 @@
             <p>ESTD: 2009</p>
             <p style="color:var(--gold); font-weight:600;">"We strive for our student's success."</p>
         </div>
-        
-          <div>
-    <h4>📞 Contact Us</h4>
-    <div style="background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 1rem;">
-        <p style="font-size:1.5rem; font-weight:800; color:var(--gold); text-shadow:0 0 20px rgba(255,215,0,0.2);">
-            <i class="fas fa-phone"></i> +91 9011395913
-        </p>
-        <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
-            <i class="fas fa-phone"></i> +91 9221838267
-        </p>
-        <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
-            <i class="fas fa-phone"></i> +91 7709935795
-        </p>
-        <p style="color:#b0b0b0; margin-top:0.5rem;">📱 Admission Helpline</p>
-    </div>
-    <p style="margin-top:0.8rem;">
-        <i class="fas fa-envelope" style="color:var(--gold);"></i> shreeparthacademy2009@gmail.com
-    </p>
-</div>
+        <div>
+            <h4>📞 Contact Us</h4>
+            <div style="background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 1rem;">
+                <p style="font-size:1.5rem; font-weight:800; color:var(--gold); text-shadow:0 0 20px rgba(255,215,0,0.2);">
+                    <i class="fas fa-phone"></i> +91 9011395913
+                </p>
+                <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
+                    <i class="fas fa-phone"></i> +91 9221838267
+                </p>
+                <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
+                    <i class="fas fa-phone"></i> +91 7709935795
+                </p>
+                <p style="color:#b0b0b0; margin-top:0.5rem;">📱 Admission Helpline</p>
+            </div>
+            <p style="margin-top:0.8rem;">
+                <i class="fas fa-envelope" style="color:var(--gold);"></i> shreeparthacademy2009@gmail.com
+            </p>
+        </div>
         <div>
             <h4>📍 Location</h4>
             <p>Ground Floor, Tryambak Heaven 2,<br>Beside Holy Spirit High School,<br>Surval Chowk, Midc Shirgaon,<br>Badlapur (E), Maharashtra 421503</p>
@@ -1115,11 +924,11 @@
 
 <script>
     // ============================================================
-    // INITIAL DATA - ALL IMAGES AND VIDEOS
+    // GALLERY IMAGES (2nd, 3rd last, 2nd last deleted)
     // ============================================================
     const galleryImages = [
         { url: "https://i.postimg.cc/KRbRRB50/0M5A5858.jpg", badge: "Event", overlay: "School Event" },
-        { url: "https://i.postimg.cc/GHRHHGjP/DSC-8332.jpg", badge: "DSC", overlay: "DSC Capture" },
+        // Second image (index 1) deleted
         { url: "https://i.postimg.cc/t7Wsq2Fr/DSC-8333.jpg", badge: "DSC", overlay: "DSC Capture" },
         { url: "https://i.postimg.cc/D4r0xw7M/file-00000000183071fab7761edb19ea37c8-(1)-png.jpg", badge: "File", overlay: "Document" },
         { url: "https://i.postimg.cc/ThgKdCnm/file-0000000021fc720bae6bcbb2224b096f.png", badge: "File", overlay: "Document" },
@@ -1147,8 +956,8 @@
         { url: "https://i.postimg.cc/D4kmQX3Q/IMG-20251213-181414.jpg", badge: "IMG", overlay: "Image" },
         { url: "https://i.postimg.cc/R6nNnTyz/IMG-20251213-191104.jpg", badge: "IMG", overlay: "Image" },
         { url: "https://i.postimg.cc/64JTVvxB/IMG-20251213-191108.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/S2zJzG5Z/IMG-20251213-WA0025.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/r0tKt9bH/IMG-20260106-175742.jpg", badge: "IMG", overlay: "Image" },
+        // 3rd last image deleted
+        // 2nd last image deleted
         { url: "https://i.postimg.cc/bG5ZJ56K/IMG-20260201-WA0098.jpg", badge: "IMG", overlay: "Image" },
         { url: "https://i.postimg.cc/qhCzCGYW/IMG-20260217-114830.jpg", badge: "IMG", overlay: "Image" },
         { url: "https://i.postimg.cc/8Jrjrb39/IMG-20260228-174507.jpg", badge: "IMG", overlay: "Image" },
@@ -1159,9 +968,25 @@
         { url: "https://i.postimg.cc/WDyd3y9K/poster-2026-05-23-074112.png", badge: "Poster", overlay: "Poster" }
     ];
 
+    // ============================================================
+    // VIDEO DATA (All 15 YouTube videos converted to embed URLs)
+    // ============================================================
     const videoData = [
-        { type: 'youtube', url: "https://www.youtube.com/embed/6J7wE0V-R0U" },
-        { type: 'sample', url: "https://www.w3schools.com/html/mov_bbb.mp4" }
+        { type: 'youtube', url: "https://www.youtube.com/embed/WYI87jKmInw" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/UPc1Oqk2FVs" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/4NNj-THiY1c" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/WYI87jKmInw" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/_GGULN14G24" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/VwZM6aAAdZk" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/-KaMCNJ88po" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/hMdRW6nb1Rw" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/5-aPwab21WA" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/LwOakfOtyrs" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/iHjzCXMJIlA" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/Li6DfZ_RRss" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/PSgHo4kAgnI" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/3qWgbKIQOQA" },
+        { type: 'youtube', url: "https://www.youtube.com/embed/EwuGqHGSwuQ" }
     ];
 
     // ============================================================
@@ -1170,15 +995,13 @@
     function renderGallery() {
         const container = document.getElementById('imageGallery');
         container.innerHTML = '';
-        galleryImages.forEach((img, index) => {
+        galleryImages.forEach((img) => {
             const div = document.createElement('div');
             div.className = 'gallery-item';
-            div.dataset.index = index;
             div.innerHTML = `
                 <img src="${img.url}" alt="${img.overlay}" />
                 <div class="badge">${img.badge}</div>
                 <div class="overlay">${img.overlay}</div>
-                <button class="admin-delete" onclick="deleteImage(${index})"><i class="fas fa-trash-alt"></i></button>
             `;
             container.appendChild(div);
         });
@@ -1190,146 +1013,32 @@
     function renderVideos() {
         const container = document.getElementById('videoGallery');
         container.innerHTML = '';
-        videoData.forEach((video, index) => {
+        videoData.forEach((video) => {
             const div = document.createElement('div');
             div.className = 'video-item';
-            div.dataset.index = index;
-            let inner = '';
-            if (video.type === 'youtube') {
-                inner = `<iframe src="${video.url}" allowfullscreen></iframe><div class="youtube-badge">YouTube</div>`;
-            } else {
-                inner = `<video src="${video.url}" controls></video><div class="youtube-badge">Sample</div>`;
-            }
-            div.innerHTML = inner + `<button class="admin-delete" onclick="deleteVideo(${index})"><i class="fas fa-trash-alt"></i></button>`;
+            div.innerHTML = `
+                <iframe src="${video.url}" allowfullscreen></iframe>
+                <div class="youtube-badge">YouTube</div>
+            `;
             container.appendChild(div);
         });
     }
 
     // ============================================================
-    // ADMIN FUNCTIONS
+    // SEND ENQUIRY TO WHATSAPP
     // ============================================================
-    function deleteImage(index) {
-        if (confirm('Delete this image?')) {
-            galleryImages.splice(index, 1);
-            renderGallery();
-            showToast('🗑️ Image deleted');
-        }
-    }
-
-    function deleteVideo(index) {
-        if (confirm('Delete this video?')) {
-            videoData.splice(index, 1);
-            renderVideos();
-            showToast('🗑️ Video deleted');
-        }
-    }
-
-    function addImage(url) {
-        if (!url || url.trim() === '') {
-            document.getElementById('adminStatus').textContent = '⚠️ Please enter a valid URL';
-            return;
-        }
-        galleryImages.push({
-            url: url.trim(),
-            badge: 'Uploaded',
-            overlay: 'New Image'
-        });
-        renderGallery();
-        document.getElementById('newImageUrl').value = '';
-        document.getElementById('adminStatus').textContent = '✅ Image added successfully!';
-        setTimeout(() => document.getElementById('adminStatus').textContent = '', 3000);
-        showToast('📸 Image added to gallery');
-    }
-
-    function addVideo(url) {
-        if (!url || url.trim() === '') {
-            document.getElementById('adminStatus').textContent = '⚠️ Please enter a valid URL';
-            return;
-        }
-        let finalUrl = url.trim();
-        // Convert watch URL to embed URL if needed
-        if (finalUrl.includes('watch?v=')) {
-            const id = finalUrl.split('v=')[1]?.split('&')[0];
-            if (id) finalUrl = `https://www.youtube.com/embed/${id}`;
-        } else if (finalUrl.includes('youtu.be/')) {
-            const id = finalUrl.split('youtu.be/')[1]?.split('?')[0];
-            if (id) finalUrl = `https://www.youtube.com/embed/${id}`;
-        }
-        videoData.push({
-            type: finalUrl.includes('youtube.com/embed') ? 'youtube' : 'sample',
-            url: finalUrl
-        });
-        renderVideos();
-        document.getElementById('newVideoUrl').value = '';
-        document.getElementById('adminStatus').textContent = '✅ Video added successfully!';
-        setTimeout(() => document.getElementById('adminStatus').textContent = '', 3000);
-        showToast('🎬 Video added to gallery');
+    function sendToWhatsApp(e) {
+        e.preventDefault();
+        const name = document.getElementById('enqName').value;
+        const email = document.getElementById('enqEmail').value;
+        const phone = document.getElementById('enqPhone').value;
+        const message = document.getElementById('enqMessage').value;
+        const text = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}`;
+        window.open(`https://wa.me/919011395913?text=${text}`, '_blank');
     }
 
     // ============================================================
-    // ADMIN PANEL CONTROLS
-    // ============================================================
-    const adminLock = document.getElementById('adminLock');
-    const adminPanel = document.getElementById('adminPanel');
-    const adminOverlay = document.getElementById('adminOverlay');
-    const adminClose = document.getElementById('adminClose');
-    const adminLoginBtn = document.getElementById('adminLoginBtn');
-    const adminPassword = document.getElementById('adminPassword');
-    const loginStatus = document.getElementById('loginStatus');
-    const adminContent = document.getElementById('adminContent');
-    const adminLoginSection = document.getElementById('adminLogin');
-    const addImageBtn = document.getElementById('addImageBtn');
-    const addVideoBtn = document.getElementById('addVideoBtn');
-    const newImageUrl = document.getElementById('newImageUrl');
-    const newVideoUrl = document.getElementById('newVideoUrl');
-
-    const ADMIN_PASSWORD = 'admin123';
-
-    function openAdminPanel() {
-        adminPanel.classList.add('visible');
-        adminOverlay.classList.add('visible');
-        adminPassword.value = '';
-        loginStatus.textContent = '';
-        adminLoginSection.style.display = 'block';
-        adminContent.style.display = 'none';
-    }
-
-    function closeAdminPanel() {
-        adminPanel.classList.remove('visible');
-        adminOverlay.classList.remove('visible');
-    }
-
-    adminLock.addEventListener('click', openAdminPanel);
-    adminOverlay.addEventListener('click', closeAdminPanel);
-    adminClose.addEventListener('click', closeAdminPanel);
-
-    adminLoginBtn.addEventListener('click', function() {
-        if (adminPassword.value === ADMIN_PASSWORD) {
-            adminLoginSection.style.display = 'none';
-            adminContent.style.display = 'block';
-            loginStatus.textContent = '';
-            document.body.classList.add('admin-mode');
-            showToast('🔓 Admin mode activated');
-        } else {
-            loginStatus.textContent = '❌ Incorrect password!';
-            loginStatus.style.color = '#e74c3c';
-        }
-    });
-
-    adminPassword.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') adminLoginBtn.click();
-    });
-
-    addImageBtn.addEventListener('click', function() {
-        addImage(newImageUrl.value);
-    });
-
-    addVideoBtn.addEventListener('click', function() {
-        addVideo(newVideoUrl.value);
-    });
-
-    // ============================================================
-    // TOPPERS DATA (Static rendering only)
+    // TOPPERS DATA
     // ============================================================
     const toppersData = [
         { name: "Vaishnavi Sawant", pct: "95.80", school: "IES" },
@@ -1478,4 +1187,4 @@
     });
 </script>
 </body>
-    </html>
+</html>
