@@ -1,1190 +1,822 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-gold-teal">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shree Parth Academy · An Emperor of Knowledge</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pink: { DEFAULT: '#EC4899', light: '#FDF2F8', dark: '#BE185D' },
+                        teal: { DEFAULT: '#14B8A6', light: '#CCFBF1', dark: '#0F766E' },
+                        gold: { DEFAULT: '#D4A843', light: '#F0E6C8', dark: '#B8922E' },
+                        navy: { DEFAULT: '#0F172A', light: '#1E293B', dark: '#020617' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        :root {
-            --primary: #0a0618;
-            --gold: #ffd700;
-            --gold-glow: 0 0 25px rgba(255,215,0,0.4);
-            --pink: #ff6b9d;
-            --teal: #4fd1c5;
-            --purple: #b794f4;
-            --orange: #ff9f43;
-            --neon-green: #7bed9f;
-            --gradient-bg: linear-gradient(135deg, #0a0618 0%, #1a0e2e 40%, #2d1b4e 100%);
-            --shadow: 0 20px 60px rgba(0,0,0,0.5);
-            --radius: 24px;
-            --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-            --font-serif: 'Playfair Display', serif;
-            --font-devanagari: 'Noto Sans Devanagari', sans-serif;
+        .page { display: none; }
+        .page.active { display: block; animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
+        .card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+        .btn { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn:hover { transform: scale(1.05); }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .neumo {
+            background: #ffffff;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.05), -20px -20px 60px rgba(255,255,255,0.8);
+        }
+        .neumo:hover {
+            box-shadow: 25px 25px 75px rgba(0,0,0,0.08), -25px -25px 75px rgba(255,255,255,0.9);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D4A843; border-radius: 10px; }
+
+        /* Theme Variables */
         body {
-            font-family:'Inter',sans-serif;
-            background:#0a0618;
-            color:#f0f0f0;
-            line-height:1.6;
-            overflow-x:hidden;
-            background-image:radial-gradient(circle at 20% 30%, rgba(255,215,0,0.05) 0%, transparent 60%),
-                            radial-gradient(circle at 80% 70%, rgba(255,107,157,0.06) 0%, transparent 50%);
-            min-height:100vh;
+            background: #ffffff;
+            color: #0F172A;
+            transition: all 0.4s ease;
         }
+        .theme-gold-teal .text-accent { color: #D4A843; }
+        .theme-gold-teal .bg-accent { background: #D4A843; }
+        .theme-gold-teal .bg-accent-light { background: #F0E6C8; }
+        .theme-gold-teal .border-accent { border-color: #D4A843; }
+        .theme-gold-teal .btn-primary { background: #D4A843; color: #0F172A; }
+        .theme-gold-teal .btn-primary:hover { background: #B8922E; }
 
-        /* Particles */
-        .particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
-        .particle {
-            position:absolute;
-            width:6px; height:6px;
-            background:rgba(255,215,0,0.4);
-            border-radius:50%;
-            animation:floatParticle 20s infinite alternate ease-in-out;
-            box-shadow:0 0 12px rgba(255,215,0,0.2);
-        }
-        .particle:nth-child(1) { left:10%; top:20%; animation-duration:25s; width:8px; height:8px; }
-        .particle:nth-child(2) { left:85%; top:15%; animation-duration:30s; background:rgba(255,107,157,0.3); }
-        .particle:nth-child(3) { left:50%; top:80%; animation-duration:22s; background:rgba(79,209,197,0.3); }
-        .particle:nth-child(4) { left:20%; top:70%; animation-duration:28s; background:rgba(183,148,244,0.3); }
-        .particle:nth-child(5) { left:75%; top:50%; animation-duration:35s; }
-        .particle:nth-child(6) { left:5%; top:40%; animation-duration:18s; background:rgba(255,159,67,0.3); }
-        @keyframes floatParticle {
-            0% { transform:translate(0,0) scale(1); opacity:0.3; }
-            100% { transform:translate(80px,-60px) scale(1.8); opacity:0.8; }
-        }
+        .theme-teal-gold .text-accent { color: #14B8A6; }
+        .theme-teal-gold .bg-accent { background: #14B8A6; }
+        .theme-teal-gold .bg-accent-light { background: #CCFBF1; }
+        .theme-teal-gold .border-accent { border-color: #14B8A6; }
+        .theme-teal-gold .btn-primary { background: #14B8A6; color: white; }
+        .theme-teal-gold .btn-primary:hover { background: #0F766E; }
 
-        /* Navbar */
-        .navbar {
-            background:rgba(10,6,24,0.85);
-            backdrop-filter:blur(12px);
-            border-bottom:2px solid rgba(255,215,0,0.3);
-            padding:0.8rem 2.5rem;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            flex-wrap:wrap;
-            gap:1rem;
-            position:sticky;
-            top:0;
-            z-index:1000;
-            box-shadow:0 4px 30px rgba(0,0,0,0.5);
+        .theme-pink-gold .text-accent { color: #EC4899; }
+        .theme-pink-gold .bg-accent { background: #EC4899; }
+        .theme-pink-gold .bg-accent-light { background: #FDF2F8; }
+        .theme-pink-gold .border-accent { border-color: #EC4899; }
+        .theme-pink-gold .btn-primary { background: #EC4899; color: white; }
+        .theme-pink-gold .btn-primary:hover { background: #BE185D; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 5px;
+            z-index: 1002;
         }
-        .logo {
-            display:flex;
-            align-items:center;
-            gap:14px;
-            color:white;
-            font-weight:800;
-            font-size:1.6rem;
-            font-family:var(--font-serif);
-            cursor:default;
-            user-select:none;
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #0F172A;
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
-        .logo img {
-            height:65px;
-            width:auto;
-            background:transparent !important;
-            border:none !important;
-            padding:0 !important;
-            object-fit:contain;
-            filter:drop-shadow(0 0 12px rgba(255,215,0,0.3));
-        }
-        .logo .logo-text .sub {
-            font-size:0.6rem;
-            font-weight:400;
-            color:var(--gold);
-            letter-spacing:3px;
-            text-shadow:0 0 10px rgba(255,215,0,0.3);
-        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
         .nav-links {
-            display:flex;
-            align-items:center;
-            gap:0.5rem 1.5rem;
-            flex-wrap:wrap;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
         .nav-links a {
-            color:rgba(255,255,255,0.8);
-            font-weight:500;
-            font-size:0.9rem;
-            padding:0.5rem 0.8rem;
-            border-radius:10px;
-            transition:var(--transition);
-            text-decoration:none;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            cursor:pointer;
-            position:relative;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
         .nav-links a:hover, .nav-links a.active {
-            color:white;
-            background:rgba(255,215,0,0.15);
-            box-shadow:0 0 20px rgba(255,215,0,0.1);
-        }
-        .nav-links a.active::after {
-            content:'';
-            position:absolute;
-            bottom:-2px;
-            left:50%;
-            transform:translateX(-50%);
-            width:28px;
-            height:3px;
-            background:var(--gold);
-            border-radius:4px;
-            box-shadow:0 0 12px rgba(255,215,0,0.6);
+            color: #D4A843;
+            background: #F0E6C8;
         }
 
-        /* Page Container */
-        .page-container { max-width:1300px; margin:0 auto; padding:2rem; position:relative; z-index:1; }
-        .page { display:none; animation:fadeIn 0.6s ease; }
-        .page.active { display:block; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-
-        /* Cards */
-        .card {
-            background:rgba(255,255,255,0.06);
-            backdrop-filter:blur(8px);
-            border:1px solid rgba(255,215,0,0.2);
-            border-radius:var(--radius);
-            padding:2rem;
-            box-shadow:var(--shadow);
-            transition:var(--transition);
-            margin-bottom:1.5rem;
-            position:relative;
-            overflow:hidden;
-        }
-        .card::before {
-            content:'';
-            position:absolute;
-            top:0; left:0; right:0;
-            height:4px;
-            background:linear-gradient(90deg, var(--gold), var(--pink), var(--teal), var(--purple));
-        }
-        .card:hover { transform:translateY(-6px); border-color:rgba(255,215,0,0.5); box-shadow:0 30px 70px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.05); }
-        .card-premium { background:rgba(255,255,255,0.08); border:2px solid rgba(255,215,0,0.3); box-shadow:0 0 30px rgba(255,215,0,0.05); }
-
-        .section-title {
-            font-size:2.5rem;
-            font-weight:800;
-            color:white;
-            margin-bottom:2rem;
-            display:flex;
-            align-items:center;
-            gap:14px;
-            font-family:var(--font-serif);
-            text-shadow:0 0 30px rgba(255,215,0,0.1);
-        }
-        .section-title i {
-            background:linear-gradient(135deg, var(--gold), var(--pink));
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-            filter:drop-shadow(0 0 10px rgba(255,215,0,0.3));
-        }
-        .section-title::after {
-            content:'';
-            flex:1;
-            height:2px;
-            background:linear-gradient(90deg, var(--gold), var(--pink), var(--teal), transparent);
-            margin-left:1rem;
-            border-radius:4px;
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: #ffffff;
+                flex-direction: column;
+                padding: 80px 2rem 2rem;
+                gap: 1.2rem;
+                box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+                transition: right 0.4s ease;
+                border-left: 1px solid #E2E8F0;
+                z-index: 1001;
+            }
+            .nav-links.open { right: 0; }
+            .nav-links a { font-size: 1.1rem; padding: 0.8rem 1rem; width: 100%; }
         }
 
-        .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-        .grid-3col { display:grid; grid-template-columns:repeat(auto-fit, minmax(270px,1fr)); gap:1.5rem; }
-        .grid-4col { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:1.5rem; }
-        @media (max-width:768px) {
-            .grid-2col { grid-template-columns:1fr; }
-            .navbar { padding:0.8rem 1rem; }
-            .page-container { padding:1rem; }
-            .section-title { font-size:1.8rem; }
+        /* Theme Toggle Inside Hamburger */
+        .theme-selector {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #E2E8F0;
+            width: 100%;
         }
+        .theme-selector-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94A3B8;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        .theme-option-mobile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: #0F172A;
+            margin-bottom: 6px;
+        }
+        .theme-option-mobile:hover { background: #F1F5F9; }
+        .theme-option-mobile.active { background: #F0E6C8; color: #D4A843; }
+        .theme-option-mobile .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .theme-option-mobile .check { margin-left: auto; color: #D4A843; display: none; }
+        .theme-option-mobile.active .check { display: block; }
 
-        .btn-gold {
-            background:linear-gradient(135deg, var(--gold), #f5c842);
-            color:#0a0618;
-            padding:0.9rem 2.2rem;
-            border-radius:60px;
-            font-weight:700;
-            border:none;
-            cursor:pointer;
-            transition:var(--transition);
-            display:inline-flex;
-            align-items:center;
-            gap:10px;
-            box-shadow:0 0 25px rgba(255,215,0,0.3);
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
-        .btn-gold:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 0 40px rgba(255,215,0,0.5); }
-
-        .mt-2 { margin-top:1.5rem; }
-        .text-center { text-align:center; }
-
-        /* Hero */
-        .hero-section {
-            background:linear-gradient(135deg, #0a0618 0%, #1a0e2e 40%, #2d1b4e 100%);
-            border-radius:var(--radius);
-            padding:4rem 3rem;
-            color:white;
-            margin-bottom:3rem;
-            position:relative;
-            overflow:hidden;
-            border:1px solid rgba(255,215,0,0.2);
-            box-shadow:0 0 60px rgba(255,215,0,0.05);
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.5);
         }
-        .hero-section .hero-bg {
-            position:absolute;
-            top:0; left:0;
-            width:100%; height:100%;
-            object-fit:cover;
-            opacity:0.08;
-            z-index:0;
+        .whatsapp-float .tooltip {
+            position: absolute;
+            right: 70px;
+            background: #ffffff;
+            color: #0F172A;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
-        .hero-section .hero-content { position:relative; z-index:1; }
-        .hero-section h1 {
-            font-size:4rem;
-            font-weight:900;
-            letter-spacing:-1px;
-            font-family:var(--font-serif);
-            text-shadow:0 0 40px rgba(255,215,0,0.2);
+        .whatsapp-float:hover .tooltip {
+            opacity: 1;
         }
-        .hero-section h1 span {
-            background:linear-gradient(135deg, var(--gold), var(--pink), var(--teal));
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-            filter:drop-shadow(0 0 20px rgba(255,215,0,0.2));
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+            }
+            .whatsapp-float .tooltip { display: none; }
         }
-        .hero-section .tagline {
-            font-size:2rem;
-            color:var(--gold);
-            font-weight:600;
-            font-family:var(--font-serif);
-            text-shadow:0 0 20px rgba(255,215,0,0.2);
-        }
-        .hero-stats { display:flex; gap:3rem; margin-top:2rem; flex-wrap:wrap; }
-        .hero-stats .stat .number {
-            font-size:3rem;
-            font-weight:900;
-            background:linear-gradient(135deg, var(--gold), var(--pink));
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-            display:block;
-            font-family:var(--font-serif);
-            filter:drop-shadow(0 0 15px rgba(255,215,0,0.2));
-        }
-        .hero-stats .stat .label { font-size:0.9rem; opacity:0.8; text-transform:uppercase; letter-spacing:1px; }
-
-        /* Tradition Cards */
-        .tradition-card {
-            background:rgba(255,255,255,0.06);
-            backdrop-filter:blur(4px);
-            padding:1.5rem;
-            border-radius:16px;
-            box-shadow:var(--shadow);
-            text-align:center;
-            transition:var(--transition);
-            border-top:6px solid var(--gold);
-            border:1px solid rgba(255,215,0,0.15);
-        }
-        .tradition-card:nth-child(2) { border-top-color:var(--pink); }
-        .tradition-card:nth-child(3) { border-top-color:var(--teal); }
-        .tradition-card:nth-child(4) { border-top-color:var(--purple); }
-        .tradition-card:hover {
-            transform:translateY(-8px);
-            box-shadow:0 30px 60px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.05);
-            border-color:rgba(255,215,0,0.4);
-        }
-        .tradition-card .card-img {
-            width:100%; height:180px; object-fit:cover;
-            border-radius:10px; margin-bottom:0.8rem;
-            border:2px solid var(--gold);
-            box-shadow:0 0 20px rgba(255,215,0,0.1);
-        }
-        .tradition-card h3 { font-size:1.3rem; font-family:var(--font-serif); color:white; }
-        .tradition-card .marathi { color:var(--pink); font-weight:600; font-size:0.95rem; font-family:var(--font-devanagari); }
-        .tradition-card p { color:#b0b0b0; font-size:0.95rem; margin-top:0.5rem; }
-
-        /* Marathi Cards - 15% hidden */
-        .marathi-card {
-            background:rgba(255,255,255,0.06);
-            backdrop-filter:blur(4px);
-            border-radius:16px;
-            overflow:hidden;
-            box-shadow:var(--shadow);
-            transition:var(--transition);
-            border:1px solid rgba(255,215,0,0.15);
-        }
-        .marathi-card:hover {
-            transform:translateY(-8px);
-            border-color:rgba(255,215,0,0.4);
-            box-shadow:0 30px 60px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.05);
-        }
-        .marathi-card img { 
-            width:100%; 
-            height:auto; 
-            display:block; 
-            border-bottom:2px solid var(--gold);
-            object-fit: cover;
-            object-position: top center;
-            min-height: 250px;
-            clip-path: inset(0 0 15% 0); 
-        }
-        .marathi-card .caption {
-            padding:1rem;
-            text-align:center;
-            background:rgba(0,0,0,0.3);
-            font-weight:500;
-            color:white;
-            margin-top: -30px;
-            position: relative;
-            z-index: 2;
-        }
-        .marathi-card .caption .en { font-size:0.9rem; color:#b0b0b0; margin-top:0.3rem; font-style:italic; }
-
-        /* Gallery - static */
-        .image-gallery {
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
-            gap:1.5rem;
-            margin-top:1.5rem;
-        }
-        .gallery-item {
-            position:relative;
-            border-radius:16px;
-            overflow:hidden;
-            box-shadow:var(--shadow);
-            transition:var(--transition);
-            aspect-ratio:1/1;
-            background:#1a0e2e;
-            border:2px solid rgba(255,215,0,0.15);
-            cursor:default;
-        }
-        .gallery-item:hover {
-            transform:scale(1.04);
-            border-color:var(--gold);
-            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.1);
-        }
-        .gallery-item img { 
-            width:100%; 
-            height:100%; 
-            object-fit:cover; 
-            display:block;
-            clip-path: inset(0 0 20% 0);
-        }
-        .gallery-item .overlay {
-            position:absolute;
-            bottom:0; left:0; right:0;
-            background:linear-gradient(transparent, rgba(10,6,24,0.9));
-            padding:1.5rem 1rem 0.8rem;
-            color:white;
-            font-weight:600;
-            font-size:0.9rem;
-            transform:translateY(100%);
-            transition:var(--transition);
-            bottom: -20%;
-        }
-        .gallery-item:hover .overlay { transform:translateY(0); }
-        .gallery-item .badge {
-            position:absolute; top:10px; right:10px;
-            background:var(--gold); color:#0a0618;
-            padding:0.2rem 0.8rem; border-radius:60px;
-            font-size:0.7rem; font-weight:700;
-            box-shadow:0 0 20px rgba(255,215,0,0.3);
-        }
-
-        /* Videos - static */
-        .video-gallery {
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-            gap:1.5rem;
-            margin-top:1.5rem;
-        }
-        .video-item {
-            position:relative;
-            border-radius:16px;
-            overflow:hidden;
-            box-shadow:var(--shadow);
-            aspect-ratio:16/9;
-            background:#1a0e2e;
-            border:2px solid rgba(255,215,0,0.15);
-            transition:var(--transition);
-        }
-        .video-item:hover {
-            border-color:var(--gold);
-            transform:scale(1.02);
-            box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.05);
-        }
-        .video-item video, .video-item iframe { width:100%; height:100%; object-fit:cover; border:none; }
-        .video-item .youtube-badge {
-            position:absolute; bottom:10px; right:10px;
-            background:rgba(255,0,0,0.85); color:white;
-            padding:0.2rem 0.8rem; border-radius:60px;
-            font-size:0.7rem; font-weight:600;
-            box-shadow:0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        /* Director */
-        .director-photo {
-            width:180px; 
-            height:180px;
-            object-fit: cover;
-            object-position: top center;
-            border-radius:50%;
-            border:4px solid var(--gold);
-            box-shadow:0 0 40px rgba(255,215,0,0.2);
-            margin:0 auto 1rem auto;
-            display:block;
-            background: #1a0e2e;
-            padding: 4px;
-        }
-        @media (max-width:768px) { 
-            .director-photo { 
-                width:140px; 
-                height:140px;
-                padding: 3px;
-            } 
-        }
-
-        /* Map */
-        .map-container {
-            border-radius:16px;
-            overflow:hidden;
-            border:2px solid var(--gold);
-            height:350px;
-            box-shadow:0 0 30px rgba(255,215,0,0.05);
-        }
-        .map-container iframe { width:100%; height:100%; border:none; }
-
-        /* Form */
-        .form-group { margin-bottom:1.2rem; }
-        .form-group label { display:block; font-weight:600; margin-bottom:0.4rem; color:#d0d0d0; }
-        .form-group input, .form-group textarea, .form-group select {
-            width:100%;
-            padding:0.9rem 1.2rem;
-            border:2px solid rgba(255,215,0,0.15);
-            border-radius:12px;
-            font-size:1rem;
-            transition:var(--transition);
-            background:rgba(255,255,255,0.05);
-            color:white;
-        }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            border-color:var(--gold);
-            outline:none;
-            box-shadow:0 0 20px rgba(255,215,0,0.1);
-        }
-        .form-group select option { background:#0a0618; color:white; }
-
-        /* Toast */
-        .toast {
-            position:fixed; bottom:2rem; right:2rem;
-            background:rgba(10,6,24,0.9);
-            backdrop-filter:blur(8px);
-            color:white;
-            padding:1rem 2rem;
-            border-radius:12px;
-            box-shadow:0 10px 40px rgba(0,0,0,0.5);
-            transform:translateY(100px);
-            opacity:0;
-            transition:all 0.5s ease;
-            z-index:9999;
-            border-left:6px solid var(--gold);
-            max-width:420px;
-        }
-        .toast.show { transform:translateY(0); opacity:1; }
-        .toast i { margin-right:12px; color:var(--gold); }
-
-        /* Footer */
-        .footer {
-            background:rgba(10,6,24,0.9);
-            backdrop-filter:blur(8px);
-            color:rgba(255,255,255,0.8);
-            padding:3rem 2rem 1.5rem;
-            margin-top:4rem;
-            border-top:2px solid rgba(255,215,0,0.2);
-        }
-        .footer-grid {
-            max-width:1200px; margin:0 auto;
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
-            gap:2.5rem;
-        }
-        .footer h4 {
-            color:white; font-size:1.2rem; margin-bottom:1rem;
-            border-bottom:2px solid var(--gold);
-            padding-bottom:0.5rem;
-            display:inline-block;
-            font-family:var(--font-serif);
-        }
-        .footer p { margin:0.5rem 0; font-size:0.95rem; color:#c0c0c0; }
-        .footer .footer-logo { display:flex; align-items:center; gap:12px; }
-        .footer .footer-logo img { height:50px; width:auto; background:transparent; border:none; object-fit:contain; }
-        .footer-bottom { text-align:center; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.05); font-size:0.9rem; opacity:0.6; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width:8px; }
-        ::-webkit-scrollbar-track { background:#0a0618; }
-        ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:4px; box-shadow:0 0 20px rgba(255,215,0,0.3); }
     </style>
 </head>
 <body>
 
-<!-- Particles -->
-<div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-</div>
-
-<!-- Toast -->
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i> <span id="toastMessage">Success!</span></div>
-
-<!-- Navbar -->
-<nav class="navbar">
-    <div class="logo">
-        <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" />
-        <div class="logo-text">
-            <span>Shree Parth Academy</span>
-            <span class="sub">✦ AN EMPEROR OF KNOWLEDGE ✦</span>
-        </div>
-    </div>
-    <div class="nav-links">
-        <a class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
-        <a data-page="about"><i class="fas fa-info-circle"></i> About</a>
-        <a data-page="courses"><i class="fas fa-book-open"></i> Courses</a>
-        <a data-page="toppers"><i class="fas fa-trophy"></i> Toppers</a>
-        <a data-page="gallery"><i class="fas fa-images"></i> Gallery</a>
-        <a data-page="videos"><i class="fas fa-video"></i> Videos</a>
-        <a data-page="enquiry"><i class="fas fa-envelope"></i> Enquiry</a>
-        <a data-page="payment"><i class="fas fa-credit-card"></i> Pay</a>
-    </div>
-</nav>
-
-<!-- Page Container -->
-<div class="page-container">
-
-    <!-- ===== HOME PAGE ===== -->
-    <div id="homePage" class="page active">
-        <div class="hero-section animate__animated animate__fadeInUp">
-            <img src="https://i.postimg.cc/zX4y60d9/IMG-20260703-WA0013.jpg" alt="Hero Background" class="hero-bg" />
-            <div class="hero-content">
-                <h1>An Emperor of <span>Knowledge</span></h1>
-                <div class="tagline">⚜️ Shree Parth Academy</div>
-                <p style="font-size:1.2rem; max-width:600px;">Established Since 2009 • "We strive for our student's success."</p>
-                <p style="font-size:1rem; max-width:600px; opacity:0.9;">India's premier educational hub – shaping the leaders of tomorrow with innovation, passion, and excellence.</p>
-                <div class="hero-stats">
-                    <div class="stat"><span class="number">2009</span><span class="label">Established</span></div>
-                    <div class="stat"><span class="number">5000+</span><span class="label">Students</span></div>
-                    <div class="stat"><span class="number">98%</span><span class="label">Success Rate</span></div>
-                    <div class="stat"><span class="number">50+</span><span class="label">Expert Teachers</span></div>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="section-title"><i class="fas fa-star"></i> Why Choose Shree Parth Academy?</h2>
-        <div class="grid-3col">
-            <div class="card card-premium text-center" style="padding:1.5rem;">
-                <i class="fas fa-chalkboard-teacher" style="font-size:3rem; color:var(--gold);"></i>
-                <h3>Expert Faculty</h3>
-                <p>Our teachers are highly qualified with years of experience and a passion for teaching. They provide personalized attention to every student.</p>
-            </div>
-            <div class="card card-premium text-center" style="padding:1.5rem;">
-                <i class="fas fa-book-open" style="font-size:3rem; color:var(--pink);"></i>
-                <h3>Comprehensive Curriculum</h3>
-                <p>We cover all subjects in depth, with regular tests, assignments, and doubt-clearing sessions to ensure complete understanding.</p>
-            </div>
-            <div class="card card-premium text-center" style="padding:1.5rem;">
-                <i class="fas fa-users" style="font-size:3rem; color:var(--teal);"></i>
-                <h3>Student-Centric Approach</h3>
-                <p>We focus on individual growth, building confidence, and nurturing talent through interactive learning and co-curricular activities.</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="grid-2col">
+    <!-- ===== NAVBAR ===== -->
+    <header class="sticky top-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+                <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" class="h-12 w-auto object-contain transition-transform group-hover:scale-105" />
                 <div>
-                    <h3><i class="fas fa-address-card" style="color:var(--gold);"></i> Get in Touch</h3>
-                    <p><i class="fas fa-phone" style="color:var(--teal);"></i> +91 9221838267 | +91 9011395913 | +91 7709935795</p>
-                    <p><i class="fas fa-envelope" style="color:var(--pink);"></i> shreeparthacademy2009@gmail.com</p>
-                    <p><i class="fas fa-map-marker-alt" style="color:var(--purple);"></i> Ground Floor, Tryambak Heaven 2, Beside Of Holy Spirit High School, Surval Chowk, Midc Shirgaon, Badlapur (E).</p>
+                    <span class="font-serif font-black text-xl text-navy block tracking-tight group-hover:text-accent transition-colors">Shree Parth Academy</span>
+                    <span class="text-[10px] font-bold text-accent tracking-widest uppercase block">✦ An Emperor of Knowledge ✦</span>
                 </div>
-                <div>
-                    <h3><i class="fas fa-clock" style="color:var(--gold);"></i> Timings</h3>
-                    <p>Mon‑Sat: Regular Batches (8:00 AM – 8:00 PM)</p>
-                    <p>Sunday: Moderator Sessions & Special Classes</p>
-                    <p style="color:var(--gold); font-weight:700; font-size:1.2rem;">✦ ESTD: 2009 ✦</p>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <button onclick="navigateTo('home')" data-page="home" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-home"></i> Home</button>
+                <button onclick="navigateTo('about')" data-page="about" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-info-circle"></i> About</button>
+                <button onclick="navigateTo('courses')" data-page="courses" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-book-open"></i> Courses</button>
+                <button onclick="navigateTo('toppers')" data-page="toppers" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-trophy"></i> Toppers</button>
+                <button onclick="navigateTo('gallery')" data-page="gallery" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-images"></i> Gallery</button>
+                <button onclick="navigateTo('videos')" data-page="videos" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-video"></i> Videos</button>
+                <button onclick="navigateTo('enquiry')" data-page="enquiry" class="px-3 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-accent hover:bg-accent-light/20 transition-all flex items-center gap-2"><i class="fas fa-envelope"></i> Enquiry</button>
+                <button onclick="navigateTo('payment')" data-page="payment" class="px-4 py-2 rounded-full text-sm font-bold btn-primary shadow-md hover:shadow-lg flex items-center gap-2 ml-2"><i class="fas fa-credit-card"></i> Pay Fee</button>
+            </nav>
+
+            <div class="flex items-center gap-3 lg:hidden">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </div>
 
-        <div class="card" style="background:linear-gradient(135deg, rgba(10,6,24,0.9), rgba(26,14,46,0.9), rgba(45,27,78,0.9)); text-align:center; border:1px solid rgba(255,215,0,0.3);">
-            <div>
-                <h2 style="color:var(--gold); font-family:var(--font-serif);">What do you prefer? Quality or Quantity?</h2>
-                <p style="max-width:600px; margin:0.5rem auto;">If your primary requirement is focused, premium‑tier individual academic support, call our enrollment desk today!</p>
-                <button class="btn-gold" onclick="showToast('📞 Call us at +91 9011395913')"><i class="fas fa-phone"></i> Contact Now</button>
-            </div>
-        </div>
-
-        <h2 class="section-title"><i class="fas fa-quote-right"></i> Our Philosophy</h2>
-        <div class="grid-4col">
-            <div class="marathi-card">
-                <img src="https://i.postimg.cc/MHgDfzds/IMG-20260703-WA0010.jpg" alt="Philosophy 1" />
-                <div class="caption">
-                    <span>उद्याच्या सुवर्ण भविष्यासाठी एक उत्कृष्ट शैक्षणिक संस्था</span>
-                    <div class="en">An excellent educational institution for a golden future tomorrow.</div>
+        <div id="mobileMenu" class="hidden lg:hidden border-b border-gray-200 bg-white p-4 space-y-2 absolute top-20 left-0 w-full shadow-md z-50">
+            <button onclick="navigateTo('home')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-home w-6"></i> Home</button>
+            <button onclick="navigateTo('about')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-info-circle w-6"></i> About Us</button>
+            <button onclick="navigateTo('courses')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-book-open w-6"></i> Courses</button>
+            <button onclick="navigateTo('toppers')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-trophy w-6"></i> Toppers</button>
+            <button onclick="navigateTo('gallery')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-images w-6"></i> Gallery</button>
+            <button onclick="navigateTo('videos')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-video w-6"></i> Videos</button>
+            <button onclick="navigateTo('enquiry')" class="w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-accent-light/20 hover:text-accent"><i class="fas fa-envelope w-6"></i> Enquiry</button>
+            <button onclick="navigateTo('payment')" class="w-full text-center px-4 py-3 rounded-lg font-bold bg-accent text-white shadow-sm"><i class="fas fa-credit-card mr-2"></i> Pay Online</button>
+            
+            <div class="theme-selector">
+                <span class="theme-selector-label"><i class="fas fa-palette mr-2"></i> Choose Theme</span>
+                <div class="theme-option-mobile active" data-theme="theme-gold-teal" onclick="switchTheme('theme-gold-teal')">
+                    <span class="icon bg-amber-100 text-amber-600">✨</span>
+                    <span>Golden + Teal</span>
+                    <span class="check"><i class="fas fa-check"></i></span>
                 </div>
-            </div>
-            <div class="marathi-card">
-                <img src="https://i.postimg.cc/nrX2LXYG/IMG-20260703-WA0011.jpg" alt="Philosophy 2" />
-                <div class="caption">
-                    <span>आम्ही स्पर्धक नाही, गुणवंत विद्यार्थी घडवतो</span>
-                    <div class="en">We are not competitors; we sculpt meritorious students.</div>
+                <div class="theme-option-mobile" data-theme="theme-teal-gold" onclick="switchTheme('theme-teal-gold')">
+                    <span class="icon bg-teal-100 text-teal-600">🌊</span>
+                    <span>Teal + Gold</span>
+                    <span class="check"><i class="fas fa-check"></i></span>
                 </div>
-            </div>
-            <div class="marathi-card">
-                <img src="https://i.postimg.cc/zX4y60d9/IMG-20260703-WA0013.jpg" alt="Philosophy 3" />
-                <div class="caption">
-                    <span>शिस्त आणि अनुभव हीच आमची ओळख</span>
-                    <div class="en">Discipline and experience are our identity.</div>
-                </div>
-            </div>
-            <div class="marathi-card">
-                <img src="https://i.postimg.cc/mkKw1T85/IMG-20260703-WA0014.jpg" alt="Philosophy 4" />
-                <div class="caption">
-                    <span>यशस्वी निकालाची परंपरा</span>
-                    <div class="en">A tradition of successful results.</div>
+                <div class="theme-option-mobile" data-theme="theme-pink-gold" onclick="switchTheme('theme-pink-gold')">
+                    <span class="icon bg-pink-100 text-pink-600">🌸</span>
+                    <span>Pink + Gold</span>
+                    <span class="check"><i class="fas fa-check"></i></span>
                 </div>
             </div>
         </div>
+    </header>
 
-        <h2 class="section-title mt-2"><i class="fas fa-landmark"></i> Our Academic Traditions</h2>
-        <div class="grid-4col">
-            <div class="tradition-card">
-                <img src="https://i.postimg.cc/z35Y8fJ9/IMG-20260707-WA0005.jpg" class="card-img" />
-                <h3>Success History</h3>
-                <div class="marathi">यशस्वी निकालाची परंपरा</div>
-                <p>A rich heritage of excellent student outcomes.</p>
-            </div>
-            <div class="tradition-card">
-                <img src="https://i.postimg.cc/mhRWBrbq/IMG-20260707-WA0006.jpg" class="card-img" />
-                <h3>Our Blueprint</h3>
-                <div class="marathi">आमचा निकाल हेच आमचे वैशिष्ट्ये</div>
-                <p>Uncompromising quality delivery is our identity.</p>
-            </div>
-            <div class="tradition-card">
-                <img src="https://i.postimg.cc/4HXD5WLB/IMG-20260707-WA0007.jpg" class="card-img" />
-                <h3>Character Building</h3>
-                <div class="marathi">आम्ही स्पर्धक नाही, गुणवंत विद्यार्थी घडवतो</div>
-                <p>We cultivate meritorious individuals.</p>
-            </div>
-            <div class="tradition-card">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop&crop=center" class="card-img" />
-                <h3>Parent Trust</h3>
-                <div class="marathi">पालकांचा विश्वास आणि सहकार्य</div>
-                <p>Building lasting trust through transparent education.</p>
-            </div>
-        </div>
+    <!-- ===== FLOATING WHATSAPP BUTTON ===== -->
+    <a href="https://wa.me/919011395913?text=Hello%20Shree%20Parth%20Academy%2C%20I%20would%20like%20to%20know%20more%20about%20your%20courses." target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+        <span class="tooltip">Chat with us</span>
+    </a>
 
-        <h2 class="section-title mt-2"><i class="fas fa-share-alt"></i> Connect With Us</h2>
-        <div class="card text-center">
-            <div class="social-links">
-                <a href="https://wa.me/919011395913" target="_blank" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://t.me/ShreeParthAcademy" target="_blank" class="social-link telegram"><i class="fab fa-telegram-plane"></i></a>
-                <a href="tel:+919011395913" class="social-link phone"><i class="fas fa-phone"></i></a>
-                <a href="mailto:shreeparthacademy2009@gmail.com" class="social-link email"><i class="fas fa-envelope"></i></a>
-                <a href="https://instagram.com/shreeparthacademy" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com/shreeparthacademy" target="_blank" class="social-link facebook"><i class="fab fa-facebook"></i></a>
-            </div>
-        </div>
-    </div>
+    <!-- ===== MAIN ===== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
 
-    <!-- ===== ABOUT PAGE ===== -->
-    <div id="aboutPage" class="page">
-        <h2 class="section-title"><i class="fas fa-building-columns"></i> About Us</h2>
-        <div class="card card-premium" style="text-align:center;">
-            <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-user-tie"></i> From Director's Desk</h3>
-            <img src="https://i.postimg.cc/vcSn6zv5/file-0000000048b0720b861f556150fbb74b.png" alt="Director" class="director-photo" />
-            <p style="font-size:1.2rem; font-weight:600;">Mr. Swapnil Kalaskar</p>
-            <p style="max-width:800px; margin:0.5rem auto;">With over <strong>25 years</strong> of experience in education, our director envisions a learning environment where every child discovers their true potential. He believes in holistic development that goes beyond textbooks, fostering critical thinking, creativity, and moral values.</p>
-            <p style="font-style:italic; color:var(--gold); font-size:1.1rem;">"We are not competitors; we are sculptors of future leaders."</p>
-        </div>
-
-        <div class="grid-2col">
-            <div>
-                <div class="card card-premium">
-                    <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-bullseye"></i> Our Mission</h3>
-                    <p>To Enable The Students Success Beyond Excellence In Their Life Long Pursuit Of Knowledge And In Their Contribution As Responsible Citizens In A Rapidly Changing Globalized World.</p>
-                    <br>
-                    <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-eye"></i> Our Vision</h3>
-                    <p>To Become A Standard Of Excellence Fostering Intellect, Creativity And Character In An Active, Student Centered Learning Community.</p>
-                    <br>
-                    <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-heart"></i> Our Motive</h3>
-                    <p>"In Every Child There Is A Hidden Warrior. It Only Requires Self Confidence And Proper Guidance."</p>
+        <!-- ===== HOME ===== -->
+        <section id="homePage" class="page active">
+            <div class="relative rounded-3xl p-8 sm:p-12 lg:p-16 mb-12 text-center bg-white border border-gray-200 shadow-xl overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+                <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-accent/10 text-accent-dark uppercase tracking-widest mb-4">Established Since 2009</span>
+                <h1 class="font-serif text-4xl sm:text-6xl font-black text-navy mb-4 tracking-tight">An Emperor of <span class="text-accent">Knowledge</span></h1>
+                <p class="font-serif italic text-lg sm:text-2xl text-accent-dark mb-4">"We strive for our student's success."</p>
+                <p class="max-w-2xl mx-auto text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">India's premier educational hub – shaping the leaders of tomorrow with innovation, passion, and academic excellence.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button onclick="navigateTo('courses')" class="px-8 py-3.5 rounded-full btn-primary shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"><i class="fas fa-book-reader mr-2"></i> Explore Courses</button>
+                    <button onclick="navigateTo('enquiry')" class="px-8 py-3.5 rounded-full border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all"><i class="fas fa-paper-plane mr-2"></i> Contact Admissions</button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-gray-200">
+                    <div><span class="block font-serif text-3xl sm:text-4xl font-black text-accent">2009</span><span class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Established</span></div>
+                    <div><span class="block font-serif text-3xl sm:text-4xl font-black text-accent">5000+</span><span class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Students Mentored</span></div>
+                    <div><span class="block font-serif text-3xl sm:text-4xl font-black text-accent">98%</span><span class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Success Rate</span></div>
+                    <div><span class="block font-serif text-3xl sm:text-4xl font-black text-accent">25+</span><span class="text-xs uppercase tracking-wider text-gray-500 font-semibold">Years Director Exp.</span></div>
                 </div>
             </div>
-            <div>
-                <div class="card card-premium">
-                    <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-clock"></i> Our Journey</h3>
-                    <div style="display:flex; gap:1.5rem; padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                        <span style="font-weight:800; color:var(--gold); min-width:80px; font-size:1.1rem; font-family:var(--font-serif);">2009</span>
-                        <span>Founded with a vision of excellence</span>
+
+            <div class="mb-16">
+                <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-star text-accent mr-3"></i>Why Choose Shree Parth Academy?</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="neumo p-8 rounded-2xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Expert Faculty</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Highly qualified teachers with decades of experience dedicated to conceptual clarity and student growth.</p>
                     </div>
-                    <div style="display:flex; gap:1.5rem; padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                        <span style="font-weight:800; color:var(--gold); min-width:80px; font-size:1.1rem; font-family:var(--font-serif);">2015</span>
-                        <span>Expanded to 500+ students</span>
+                    <div class="neumo p-8 rounded-2xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl"><i class="fas fa-book-open"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Comprehensive Syllabus</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">In-depth subject coverage, weekly assessments, continuous feedback, and dedicated doubt-solving modules.</p>
                     </div>
-                    <div style="display:flex; gap:1.5rem; padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                        <span style="font-weight:800; color:var(--gold); min-width:80px; font-size:1.1rem; font-family:var(--font-serif);">2020</span>
-                        <span>Digital transformation & E‑Learning</span>
-                    </div>
-                    <div style="display:flex; gap:1.5rem; padding:0.8rem 0;">
-                        <span style="font-weight:800; color:var(--gold); min-width:80px; font-size:1.1rem; font-family:var(--font-serif);">2024</span>
-                        <span>World‑Class curriculum & facilities</span>
+                    <div class="neumo p-8 rounded-2xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl"><i class="fas fa-users-cog"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Personalized Mentorship</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Focus on individual learning curves, confidence building, and nurturing young minds to excel.</p>
                     </div>
                 </div>
-                <div class="card card-premium mt-2">
-                    <h3 style="color:var(--gold); font-family:var(--font-serif);"><i class="fas fa-map-pin"></i> Our Location</h3>
-                    <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.157!2d73.2645!3d19.1550!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c0b4a1f0b1b1%3A0x7e2b1c0d5e6f7a8b!2sSurval%20Chowk%2C%20Badlapur%20East%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="mb-16">
+                <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-quote-right text-accent mr-3"></i>Our Philosophy</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center">
+                        <img src="https://i.postimg.cc/MHgDfzds/IMG-20260703-WA0010.jpg" class="w-full h-48 object-cover rounded-lg mb-3" />
+                        <p class="text-sm font-bold text-navy">उद्याच्या सुवर्ण भविष्यासाठी एक उत्कृष्ट शैक्षणिक संस्था</p>
+                        <p class="text-xs text-gray-500">An excellent educational institution for a golden future tomorrow.</p>
                     </div>
-                    <p style="margin-top:1rem;">Ground Floor, Tryambak Heaven 2, Beside Of Holy Spirit High School, Surval Chowk, Midc Shirgaon, Badlapur (E), Maharashtra 421503</p>
+                    <div class="card p-4 text-center">
+                        <img src="https://i.postimg.cc/nrX2LXYG/IMG-20260703-WA0011.jpg" class="w-full h-48 object-cover rounded-lg mb-3" />
+                        <p class="text-sm font-bold text-navy">आम्ही स्पर्धक नाही, गुणवंत विद्यार्थी घडवतो</p>
+                        <p class="text-xs text-gray-500">We are not competitors; we sculpt meritorious students.</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <img src="https://i.postimg.cc/zX4y60d9/IMG-20260703-WA0013.jpg" class="w-full h-48 object-cover rounded-lg mb-3" />
+                        <p class="text-sm font-bold text-navy">शिस्त आणि अनुभव हीच आमची ओळख</p>
+                        <p class="text-xs text-gray-500">Discipline and experience are our identity.</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <img src="https://i.postimg.cc/mkKw1T85/IMG-20260703-WA0014.jpg" class="w-full h-48 object-cover rounded-lg mb-3" />
+                        <p class="text-sm font-bold text-navy">यशस्वी निकालाची परंपरा</p>
+                        <p class="text-xs text-gray-500">A tradition of successful results.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- ===== COURSES PAGE ===== -->
-    <div id="coursesPage" class="page">
-        <h2 class="section-title"><i class="fas fa-book-open"></i> Our Courses</h2>
-        <div class="card card-premium">
-            <h3 style="color:var(--gold);">Academic Programs</h3>
-            <ul style="list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; padding:0;">
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid var(--gold);"><strong>5th to 10th Semi-English (State Board)</strong><br>Comprehensive coverage of all subjects with regular assessments in Semi-English medium.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid var(--pink);"><strong>5th to 10th English Medium (State Board)</strong><br>Full English medium curriculum with expert guidance.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid var(--teal);"><strong>CBSE (5th to 10th)</strong><br>Focused preparation for CBSE curriculum with expert guidance.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid var(--purple);"><strong>11th & 12th Commerce (State Board & CBSE)</strong><br>In-depth study of Accountancy, Economics, Business Studies, and more.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid #f39c12;"><strong>Foundation Courses (8th & 9th)</strong><br>Strong foundation building for future competitive exams.</li>
-                <li style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:12px; border-left:4px solid #e74c3c;"><strong>Spoken English & Personality Development</strong><br>Enhance communication skills and overall personality.</li>
-            </ul>
-            <p class="mt-2">Each course is designed with a focus on conceptual clarity, regular assessments, and individual attention. We also conduct periodic parent-teacher meetings to track progress.</p>
-        </div>
-        <div class="card" style="background:linear-gradient(135deg, rgba(10,6,24,0.9), rgba(26,14,46,0.9), rgba(45,27,78,0.9)); text-align:center;">
-            <h3 style="color:var(--gold);">Need a custom program?</h3>
-            <p>We offer personalized learning plans tailored to each student's needs. Contact us for a consultation.</p>
-            <button class="btn-gold" onclick="showToast('📞 Call us at +91 9011395913')"><i class="fas fa-phone"></i> Enquire Now</button>
-        </div>
-    </div>
-
-    <!-- ===== TOPPERS PAGE ===== -->
-    <div id="toppersPage" class="page">
-        <h2 class="section-title"><i class="fas fa-trophy"></i> Our Jewels of SSC</h2>
-        <div class="card card-premium">
-            <h3 style="color:var(--gold);"><i class="fas fa-medal"></i> SSC TOPPERS IN SHREE PARTH ACADEMY</h3>
-            <div class="toppers-wrapper">
-                <table class="toppers-table" id="toppersTable">
-                    <thead><tr><th style="width:60px;">Rank</th><th>Name</th><th style="width:80px;">%</th><th>School</th></tr></thead>
-                    <tbody id="toppersBody"></tbody>
-                </table>
+            <div class="mb-16">
+                <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-quote-left text-accent mr-3"></i>What Our Toppers Say</h2>
+                <div class="grid md:grid-cols-3 gap-6" id="testimonialsContainer"></div>
             </div>
-            <p class="mt-2 text-center" style="color:#b0b0b0; font-style:italic;">*And Many with More than Distinction</p>
-        </div>
-    </div>
 
-    <!-- ===== GALLERY PAGE ===== -->
-    <div id="galleryPage" class="page">
-        <h2 class="section-title"><i class="fas fa-images"></i> Premium Image Gallery</h2>
-        <div class="image-gallery" id="imageGallery">
-            <!-- Gallery items injected by JavaScript -->
-        </div>
-    </div>
-
-    <!-- ===== VIDEOS PAGE ===== -->
-    <div id="videosPage" class="page">
-        <h2 class="section-title"><i class="fas fa-video"></i> Video Gallery</h2>
-        <div class="video-gallery" id="videoGallery">
-            <!-- Video items injected by JavaScript -->
-        </div>
-    </div>
-
-    <!-- ===== ENQUIRY PAGE ===== -->
-    <div id="enquiryPage" class="page">
-        <h2 class="section-title"><i class="fas fa-envelope"></i> Enquiry Form</h2>
-        <div class="card card-premium" style="max-width:700px; margin:0 auto;">
-            <form id="enquiryForm" onsubmit="sendToWhatsApp(event)">
-                <div class="form-group"><label>Full Name</label><input type="text" id="enqName" placeholder="Your Name" required /></div>
-                <div class="form-group"><label>Email</label><input type="email" id="enqEmail" placeholder="your@email.com" required /></div>
-                <div class="form-group"><label>Phone</label><input type="tel" id="enqPhone" placeholder="+91 9876543210" required /></div>
-                <div class="form-group"><label>Message</label><textarea id="enqMessage" rows="4" placeholder="I would like to know more about your courses." required></textarea></div>
-                <button type="submit" class="btn-gold"><i class="fas fa-paper-plane"></i> Send Enquiry</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ===== PAYMENT PAGE ===== -->
-    <div id="paymentPage" class="page">
-        <h2 class="section-title"><i class="fas fa-credit-card"></i> Payment Portal</h2>
-        <div class="grid-2col">
-            <div>
-                <div class="card card-premium">
-                    <h3><i class="fas fa-hand-holding-usd" style="color:var(--gold);"></i> Make a Payment</h3>
-                    <div class="form-group"><label>Amount (₹)</label><input type="number" id="paymentAmount" placeholder="Enter amount" /></div>
-                    <div class="form-group"><label>Payment For</label>
-                        <select>
-                            <option>Tuition Fees</option>
-                            <option>Exam Fees</option>
-                            <option>Library Fees</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <a href="upi://pay?pa=shreeparthacademy2009-2@okaxis&pn=Shree%20Parth%20Academy&cu=INR" target="_blank" class="btn-gold" style="display:inline-flex; align-items:center; gap:10px; margin-top:0.5rem;">
-                        <i class="fas fa-lock"></i> Pay Now (UPI)
-                    </a>
+            <div class="neumo p-8 rounded-2xl text-center">
+                <h3 class="font-serif text-2xl font-bold mb-6"><i class="fas fa-share-alt text-accent mr-2"></i>Connect With Us Across Platforms</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://wa.me/919011395913" target="_blank" class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-xl transition-all shadow-md hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/ShreeParthAcademy" target="_blank" class="w-12 h-12 rounded-full bg-sky-500 hover:bg-sky-600 text-white flex items-center justify-center text-xl transition-all shadow-md hover:scale-110"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="tel:+919011395913" class="w-12 h-12 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center text-xl transition-all shadow-md hover:scale-110"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:shreeparthacademy2009@gmail.com" class="w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center text-xl transition-all shadow-md hover:scale-110"><i class="fas fa-envelope"></i></a>
+                    <a href="https://instagram.com/shreeparthacademy" target="_blank" class="w-12 h-12 rounded-full bg-pink-600 hover:bg-pink-700 text-white flex items-center justify-center text-xl transition-all shadow-md hover:scale-110"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <div>
-                <div class="card card-premium">
-                    <h3><i class="fas fa-qrcode" style="color:var(--gold);"></i> Quick Pay Options</h3>
-                    <div class="payment-options">
-                        <div class="payment-option" onclick="showToast('📱 UPI: shreeparthacademy2009-2@okaxis')"><i class="fas fa-mobile-alt"></i><span class="label">UPI</span></div>
-                        <div class="payment-option" onclick="showToast('📱 PhonePe: +91 9011395913')"><i class="fas fa-phone"></i><span class="label">PhonePe</span></div>
-                        <div class="payment-option" onclick="showToast('🏦 Bank details shown below')"><i class="fas fa-university"></i><span class="label">Bank</span></div>
-                        <div class="payment-option" onclick="showToast('💳 Google Pay: shreeparthacademy2009@okaxis')"><i class="fab fa-google-pay"></i><span class="label">GPay</span></div>
-                    </div>
-                    <div class="mt-2">
-                        <h4 style="color:var(--gold);"><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h4>
-                        <div class="qr-container">
-                            <img src="https://i.postimg.cc/TwxDxmyV/IMG-20260708-WA0002.jpg" alt="UPI QR Code" />
+        </section>
+
+        <!-- ===== ABOUT ===== -->
+        <section id="aboutPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-building-columns text-accent mr-3"></i>About Our Academy</h2>
+            <div class="neumo p-8 sm:p-10 rounded-3xl text-center mb-12">
+                <img src="https://i.postimg.cc/vcSn6zv5/file-0000000048b0720b861f556150fbb74b.png" alt="Director" class="w-40 h-40 object-cover object-top rounded-full border-4 border-accent mx-auto mb-4 shadow-lg" />
+                <h3 class="text-2xl font-bold mb-1">Mr. Swapnil Kalaskar</h3>
+                <span class="text-xs font-bold text-accent uppercase tracking-wider block mb-4">Founder & Director</span>
+                <p class="max-w-3xl mx-auto text-gray-600 leading-relaxed mb-6">With over <strong>25+ years of personal teaching excellence</strong> in Mathematics and Science, Mr. Kalaskar envisions an educational ecosystem where every child unearths their true potential through conceptual clarity and critical reasoning.</p>
+                <blockquote class="font-serif italic text-lg text-accent-dark max-w-2xl mx-auto">"We are not merely educators; we are sculptors crafting future leaders."</blockquote>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="neumo p-8 rounded-2xl space-y-6">
+                    <div><h3 class="font-serif text-xl font-bold text-accent mb-2"><i class="fas fa-bullseye mr-2"></i>Our Mission</h3><p class="text-gray-600 text-sm leading-relaxed">To enable students to succeed beyond academic excellence in their lifelong pursuit of knowledge and in their contribution as responsible global citizens.</p></div>
+                    <div><h3 class="font-serif text-xl font-bold text-accent mb-2"><i class="fas fa-eye mr-2"></i>Our Vision</h3><p class="text-gray-600 text-sm leading-relaxed">To standardise educational excellence by fostering intellect, creativity, and moral character in a student-centered learning environment.</p></div>
+                    <div><h3 class="font-serif text-xl font-bold text-accent mb-2"><i class="fas fa-heart mr-2"></i>Our Core Belief</h3><p class="text-gray-600 text-sm leading-relaxed">"In every child lies a champion waiting to be empowered by confidence and guidance."</p></div>
+                </div>
+                <div class="neumo p-8 rounded-2xl">
+                    <h3 class="font-serif text-xl font-bold text-accent mb-6"><i class="fas fa-history mr-2"></i>Our Journey</h3>
+                    <div class="space-y-6 border-l-2 border-accent/30 pl-6">
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-accent"></div>
+                            <span class="text-xs font-bold text-accent uppercase">2009</span>
+                            <h4 class="font-bold">Academy Established</h4>
+                            <p class="text-xs text-gray-500">Founded with a vision to revolutionize coaching standards in Badlapur.</p>
                         </div>
-                        <p class="text-center"><strong>UPI ID:</strong> shreeparthacademy2009-2@okaxis</p>
-                    </div>
-                    <div class="mt-2">
-                        <h4 style="color:var(--gold);"><i class="fas fa-university"></i> Bank Transfer Details</h4>
-                        <div class="bank-details" id="bankDetailsContainer">
-                            <p><strong>Bank Name:</strong> State Bank of India</p>
-                            <p><strong>Account Number:</strong> 38616877754</p>
-                            <p><strong>IFSC Code:</strong> SBIN0021999</p>
-                            <p><strong>Branch:</strong> Katrap, Badlapur (E)</p>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-accent"></div>
+                            <span class="text-xs font-bold text-accent uppercase">2015</span>
+                            <h4 class="font-bold">Massive Student Expansion</h4>
+                            <p class="text-xs text-gray-500">Crossed 500+ active students across State, CBSE, and ICSE boards.</p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-accent"></div>
+                            <span class="text-xs font-bold text-accent uppercase">2020</span>
+                            <h4 class="font-bold">Digital Learning Era</h4>
+                            <p class="text-xs text-gray-500">Integrated smart classrooms, online test platforms, and multimedia aids.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-grid">
-        <div>
-            <div class="footer-logo">
-                <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" />
-                <div><h4 style="border:none; margin:0;">Shree Parth Academy</h4><p style="color:var(--gold);">An Emperor of Knowledge</p></div>
+            <div class="neumo p-6 rounded-2xl">
+                <h3 class="font-serif text-xl font-bold text-accent mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Visit Our Campus</h3>
+                <div class="w-full h-72 rounded-xl overflow-hidden border border-gray-200 mb-4">
+                    <iframe class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.157!2d73.2645!3d19.1550!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c0b4a1f0b1b1%3A0x7e2b1c0d5e6f7a8b!2sSurval%20Chowk%2C%20Badlapur%20East%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000" loading="lazy"></iframe>
+                </div>
+                <p class="text-sm text-gray-600 text-center"><i class="fas fa-location-dot text-accent mr-1"></i> Ground Floor, Tryambak Heaven 2, Beside Holy Spirit High School, Surval Chowk, MIDC Shirgaon, Badlapur (E), Maharashtra 421503</p>
             </div>
-            <p>ESTD: 2009</p>
-            <p style="color:var(--gold); font-weight:600;">"We strive for our student's success."</p>
-        </div>
-        <div>
-            <h4>📞 Contact Us</h4>
-            <div style="background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 1rem;">
-                <p style="font-size:1.5rem; font-weight:800; color:var(--gold); text-shadow:0 0 20px rgba(255,215,0,0.2);">
-                    <i class="fas fa-phone"></i> +91 9011395913
-                </p>
-                <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
-                    <i class="fas fa-phone"></i> +91 9221838267
-                </p>
-                <p style="font-size:1.2rem; font-weight:600; color:white; margin-top:0.3rem;">
-                    <i class="fas fa-phone"></i> +91 7709935795
-                </p>
-                <p style="color:#b0b0b0; margin-top:0.5rem;">📱 Admission Helpline</p>
+        </section>
+
+        <!-- ===== COURSES ===== -->
+        <section id="coursesPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-graduation-cap text-accent mr-3"></i>Academic Offerings</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-school"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">5th to 10th Standard</span>
+                    <h3 class="text-xl font-bold text-center mb-2">English Medium</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">Comprehensive coaching for State, CBSE, and ICSE boards. Includes periodic test series and board moderation guidance.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-book-reader"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">5th to 10th Standard</span>
+                    <h3 class="text-xl font-bold text-center mb-2">Semi-English Medium</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">Bilingual conceptual explanation ensuring complete clarity in Science & Mathematics along with language proficiency development.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">Skill Development</span>
+                    <h3 class="text-xl font-bold text-center mb-2">Vedic Mathematics Mastery</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">Ancient mental arithmetic techniques designed to increase speed, precision, and eliminate fear of numbers in competitive exams.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-comments"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">Personality & Language</span>
+                    <h3 class="text-xl font-bold text-center mb-2">Spoken English Bootcamp</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">Grammar fundamentals, pronunciation drills, public speaking practice, and confidence-building exercises for fluent communication.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-flask"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">11th & 12th Standard</span>
+                    <h3 class="text-xl font-bold text-center mb-2">Science (PCB / PCMB)</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">In-depth coaching in Physics, Chemistry, Biology, and Mathematics. Complete syllabus coverage with practical sessions.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
+                <div class="neumo p-8 rounded-2xl hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 text-accent text-3xl flex items-center justify-center"><i class="fas fa-chart-line"></i></div>
+                    <span class="text-xs font-bold text-accent uppercase tracking-wider block text-center">11th & 12th Standard</span>
+                    <h3 class="text-xl font-bold text-center mb-2">Commerce</h3>
+                    <p class="text-center text-gray-600 text-sm mb-6 leading-relaxed">Expert coaching in Accountancy, Economics, Business Studies, and Mathematics. Prepare for board exams and competitive entrance tests.</p>
+                    <button onclick="navigateTo('enquiry')" class="w-full py-3 rounded-xl border-2 border-accent text-accent font-bold hover:bg-accent hover:text-white transition-all">Enquire Now</button>
+                </div>
             </div>
-            <p style="margin-top:0.8rem;">
-                <i class="fas fa-envelope" style="color:var(--gold);"></i> shreeparthacademy2009@gmail.com
-            </p>
+        </section>
+
+        <!-- ===== TOPPERS ===== -->
+        <section id="toppersPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-trophy text-accent mr-3"></i>Our Jewels of SSC</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="toppersCardsContainer">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- ===== GALLERY ===== -->
+        <section id="galleryPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-camera text-accent mr-3"></i>Photo Gallery</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galleryGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- ===== VIDEOS ===== -->
+        <section id="videosPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-circle-play text-accent mr-3"></i>Video Gallery & Lectures</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="videoGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- ===== ENQUIRY ===== -->
+        <section id="enquiryPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-paper-plane text-accent mr-3"></i>Admissions & Enquiry</h2>
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border border-gray-200 shadow-xl">
+                <form id="enquiryForm" onsubmit="handleEnquirySubmit(event)" class="space-y-6">
+                    <div><label class="block text-sm font-bold mb-2">Student / Parent Name *</label><input type="text" id="enqName" required placeholder="Enter full name" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-accent" /></div>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div><label class="block text-sm font-bold mb-2">Contact Number *</label><input type="tel" id="enqPhone" required placeholder="+91 9876543210" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-accent" /></div>
+                        <div><label class="block text-sm font-bold mb-2">Class / Course Interested *</label><select id="enqCourse" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-accent"><option>5th to 10th English Medium</option><option>5th to 10th Semi-English</option><option>Vedic Mathematics</option><option>Spoken English</option><option>11th & 12th Science</option><option>11th & 12th Commerce</option></select></div>
+                    </div>
+                    <div><label class="block text-sm font-bold mb-2">Your Message / Query *</label><textarea id="enqMessage" rows="4" required placeholder="Tell us about your requirements..." class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-accent"></textarea></div>
+                    <button type="submit" class="w-full py-4 rounded-xl bg-accent hover:bg-accent-dark text-white font-bold shadow-lg transition-all"><i class="fab fa-whatsapp mr-2"></i> Send Inquiry via WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===== PAYMENT ===== -->
+        <section id="paymentPage" class="page">
+            <h2 class="font-serif text-3xl font-bold text-center mb-8"><i class="fas fa-wallet text-accent mr-3"></i>Fee Payment Portal</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="neumo p-8 rounded-3xl text-center">
+                    <h3 class="font-serif text-xl font-bold text-accent mb-4"><i class="fas fa-qrcode mr-2"></i>UPI / QR Code Scan</h3>
+                    <div class="w-56 h-56 mx-auto mb-4 border-2 border-accent rounded-2xl overflow-hidden p-2 bg-white"><img src="https://i.postimg.cc/TwxDxmyV/IMG-20260708-WA0002.jpg" alt="UPI QR" class="w-full h-full object-contain" /></div>
+                    <p class="font-mono text-sm font-bold mb-6 text-navy">UPI ID: shreeparthacademy2009-2@okaxis</p>
+                    <a href="upi://pay?pa=shreeparthacademy2009-2@okaxis&pn=Shree%20Parth%20Academy&cu=INR" class="inline-block w-full py-3 rounded-xl bg-accent text-white font-bold shadow-md hover:bg-accent-dark transition-all"><i class="fas fa-mobile-alt mr-2"></i> Open UPI App Directly</a>
+                </div>
+                <div class="neumo p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-accent mb-6"><i class="fas fa-university mr-2"></i>Bank Wire Transfer</h3>
+                        <div class="space-y-4 text-sm">
+                            <div class="flex justify-between py-2 border-b border-gray-200"><span class="text-gray-500">Bank Name</span><span class="font-bold">State Bank of India (SBI)</span></div>
+                            <div class="flex justify-between py-2 border-b border-gray-200"><span class="text-gray-500">Account Number</span><span class="font-mono font-bold">38616877754</span></div>
+                            <div class="flex justify-between py-2 border-b border-gray-200"><span class="text-gray-500">IFSC Code</span><span class="font-mono font-bold">SBIN0021999</span></div>
+                            <div class="flex justify-between py-2 border-b border-gray-200"><span class="text-gray-500">Branch</span><span class="font-bold">Katrap, Badlapur (E)</span></div>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 rounded-xl bg-accent/10 text-xs text-accent-dark"><i class="fas fa-info-circle mr-1"></i> Please share a screenshot of the payment receipt on WhatsApp (+91 9011395913) for instant acknowledgment.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-navy text-gray-300 border-t-4 border-accent pt-12 pb-6 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" class="h-10 w-auto" />
+                    <span class="font-serif font-bold text-white text-lg">Shree Parth Academy</span>
+                </div>
+                <p class="text-xs text-gray-400 mb-2">ESTD: 2009</p>
+                <p class="font-serif italic text-accent text-sm">"We strive for our student's success."</p>
+            </div>
+            <div>
+                <h4 class="font-serif text-white font-bold mb-4 border-b border-accent/40 pb-2">Direct Contact</h4>
+                <p class="text-sm font-bold text-accent"><i class="fas fa-phone mr-2"></i>+91 9011395913</p>
+                <p class="text-sm font-bold"><i class="fas fa-phone mr-2"></i>+91 9221838267</p>
+                <p class="text-sm font-bold"><i class="fas fa-phone mr-2"></i>+91 7709935795</p>
+                <p class="text-xs text-gray-400 mt-2"><i class="fas fa-envelope mr-1"></i> shreeparthacademy2009@gmail.com</p>
+            </div>
+            <div>
+                <h4 class="font-serif text-white font-bold mb-4 border-b border-accent/40 pb-2">Campus Location</h4>
+                <p class="text-xs leading-relaxed">Ground Floor, Tryambak Heaven 2, Beside Holy Spirit High School, Surval Chowk, MIDC Shirgaon, Badlapur (E), Maharashtra 421503</p>
+            </div>
+            <div>
+                <h4 class="font-serif text-white font-bold mb-4 border-b border-accent/40 pb-2">Operating Hours</h4>
+                <p class="text-xs">Mon - Sat: 8:00 AM – 8:00 PM</p>
+                <p class="text-xs">Sunday: Special Moderator Sessions</p>
+                <span class="inline-block mt-4 text-xs font-bold text-accent uppercase tracking-widest">✦ AN EMPEROR OF KNOWLEDGE ✦</span>
+            </div>
         </div>
-        <div>
-            <h4>📍 Location</h4>
-            <p>Ground Floor, Tryambak Heaven 2,<br>Beside Holy Spirit High School,<br>Surval Chowk, Midc Shirgaon,<br>Badlapur (E), Maharashtra 421503</p>
-        </div>
-        <div>
-            <h4>🕐 Timings</h4>
-            <p>Mon‑Sat: 8:00 AM – 8:00 PM</p>
-            <p>Sunday: Moderator Sessions</p>
-            <p style="color:var(--gold); font-weight:700; font-family:var(--font-serif);">✦ ESTD: 2009 ✦</p>
-        </div>
+        <div class="border-t border-gray-800 text-center text-xs text-gray-500 pt-6">&copy; 2026 Shree Parth Academy. All Rights Reserved.</div>
+    </footer>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 hidden flex items-center justify-center p-4">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-white text-3xl hover:text-accent"><i class="fas fa-times"></i></button>
+        <img id="modalImage" class="max-w-full max-h-[85vh] rounded-lg object-contain" src="" alt="Enlarged gallery view" />
     </div>
-    <div class="footer-bottom"><p>&copy; 2026 Shree Parth Academy. All Rights Reserved.</p></div>
-</footer>
 
-<script>
-    // ============================================================
-    // GALLERY IMAGES (2nd, 3rd last, 2nd last deleted)
-    // ============================================================
-    const galleryImages = [
-        { url: "https://i.postimg.cc/KRbRRB50/0M5A5858.jpg", badge: "Event", overlay: "School Event" },
-        // Second image (index 1) deleted
-        { url: "https://i.postimg.cc/t7Wsq2Fr/DSC-8333.jpg", badge: "DSC", overlay: "DSC Capture" },
-        { url: "https://i.postimg.cc/D4r0xw7M/file-00000000183071fab7761edb19ea37c8-(1)-png.jpg", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/ThgKdCnm/file-0000000021fc720bae6bcbb2224b096f.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/jCPDxZyz/file-000000002f6c71fa9bc707d01b03d360.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/CdkRhmbq/file-00000000328c720798e1fbfb953c24cc.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/p5frsL2H/file-0000000044ac7208a293d44254d7caa0.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/NLmKspR8/file-000000004ad471fd86e94ba279321b5c.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/K4B1GJt3/file-000000005cb872098a94b4fcf4cc597d.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/vxrT0ZQR/file-00000000770871faa424867c0089f71e.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/bdkZy31C/file-00000000a294720b97796455e2a585e4.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/nMBXF0qP/file-00000000a70c7206a6e8cdd268b25966-(1).png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/3Wmk8n2b/file-00000000be6871f894aa0c4042ded97a.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/BtHjSM2p/file-00000000c3ec72078a1c138e4b334008.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/8sM7ptLZ/file-00000000d6207207897b57e663c7559d.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/LhLJ9NjB/file-00000000f3fc72068430e7ec1970efe9.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/gr8xzN3H/file-00000000f5d071fa99d0a1b2b43a3820.png", badge: "File", overlay: "Document" },
-        { url: "https://i.postimg.cc/1VGXv3yd/IMG-20250622-124021.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/CBfzf4t7/IMG-20250623-WA0007.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/wR835mYc/IMG-20250905-162357.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/WqGz51sn/IMG-20250905-182831.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/N2qL8HvB/IMG-20250905-183210.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/30XNtx3Z/IMG-20250907-183716.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/dkTLT9p3/IMG-20251126-170453.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/hfnffT0w/IMG-20251213-181408.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/D4kmQX3Q/IMG-20251213-181414.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/R6nNnTyz/IMG-20251213-191104.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/64JTVvxB/IMG-20251213-191108.jpg", badge: "IMG", overlay: "Image" },
-        // 3rd last image deleted
-        // 2nd last image deleted
-        { url: "https://i.postimg.cc/bG5ZJ56K/IMG-20260201-WA0098.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/qhCzCGYW/IMG-20260217-114830.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/8Jrjrb39/IMG-20260228-174507.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/JDBGBQgf/IMG-20260512-185012.png", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/jwJLJh9Z/IMG-20260703-WA0002.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/Hc7V7tK3/IMG-20260707-WA0013.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/ctRCFLdD/IMG-5402.jpg", badge: "IMG", overlay: "Image" },
-        { url: "https://i.postimg.cc/WDyd3y9K/poster-2026-05-23-074112.png", badge: "Poster", overlay: "Poster" }
-    ];
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== THEME TOGGLE =====
+        function switchTheme(theme) {
+            document.body.classList.remove('theme-gold-teal', 'theme-teal-gold', 'theme-pink-gold');
+            document.body.classList.add(theme);
+            document.querySelectorAll('.theme-option-mobile').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.theme-option-mobile[data-theme="${theme}"]`).classList.add('active');
+            localStorage.setItem('selectedTheme', theme);
+        }
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme) {
+            document.body.classList.add(savedTheme);
+            document.querySelector(`.theme-option-mobile[data-theme="${savedTheme}"]`)?.classList.add('active');
+        }
 
-    // ============================================================
-    // VIDEO DATA (All 15 YouTube videos converted to embed URLs)
-    // ============================================================
-    const videoData = [
-        { type: 'youtube', url: "https://www.youtube.com/embed/WYI87jKmInw" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/UPc1Oqk2FVs" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/4NNj-THiY1c" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/WYI87jKmInw" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/_GGULN14G24" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/VwZM6aAAdZk" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/-KaMCNJ88po" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/hMdRW6nb1Rw" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/5-aPwab21WA" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/LwOakfOtyrs" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/iHjzCXMJIlA" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/Li6DfZ_RRss" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/PSgHo4kAgnI" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/3qWgbKIQOQA" },
-        { type: 'youtube', url: "https://www.youtube.com/embed/EwuGqHGSwuQ" }
-    ];
-
-    // ============================================================
-    // RENDER GALLERY
-    // ============================================================
-    function renderGallery() {
-        const container = document.getElementById('imageGallery');
-        container.innerHTML = '';
-        galleryImages.forEach((img) => {
-            const div = document.createElement('div');
-            div.className = 'gallery-item';
-            div.innerHTML = `
-                <img src="${img.url}" alt="${img.overlay}" />
-                <div class="badge">${img.badge}</div>
-                <div class="overlay">${img.overlay}</div>
-            `;
-            container.appendChild(div);
+        // ===== HAMBURGER =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('hidden');
         });
-    }
-
-    // ============================================================
-    // RENDER VIDEOS
-    // ============================================================
-    function renderVideos() {
-        const container = document.getElementById('videoGallery');
-        container.innerHTML = '';
-        videoData.forEach((video) => {
-            const div = document.createElement('div');
-            div.className = 'video-item';
-            div.innerHTML = `
-                <iframe src="${video.url}" allowfullscreen></iframe>
-                <div class="youtube-badge">YouTube</div>
-            `;
-            container.appendChild(div);
+        document.querySelectorAll('#mobileMenu button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.add('hidden');
+            });
         });
-    }
 
-    // ============================================================
-    // SEND ENQUIRY TO WHATSAPP
-    // ============================================================
-    function sendToWhatsApp(e) {
-        e.preventDefault();
-        const name = document.getElementById('enqName').value;
-        const email = document.getElementById('enqEmail').value;
-        const phone = document.getElementById('enqPhone').value;
-        const message = document.getElementById('enqMessage').value;
-        const text = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}`;
-        window.open(`https://wa.me/919011395913?text=${text}`, '_blank');
-    }
+        // ===== DATA =====
+        const toppersData = [
+            { name: "Vaishnavi Sawant", pct: "95.80", school: "IES" },
+            { name: "Vaishnavi Patil", pct: "95.20", school: "Heaven Bell" },
+            { name: "Gargi Yadav", pct: "94.80", school: "Holy Spirit" },
+            { name: "Sushmita Ahirrao", pct: "94.73", school: "IES" },
+            { name: "Anand Khismatrao", pct: "93.82", school: "IES" },
+            { name: "Bhawna Chouhan", pct: "93.40", school: "FATIMA" },
+            { name: "Srushti Agnihotri", pct: "93.00", school: "Heaven Bell" },
+            { name: "Priyanka Thite", pct: "92.91", school: "IES" },
+            { name: "Abhijeet Howal", pct: "92.91", school: "IES" },
+            { name: "Tejal Jadhav", pct: "92.91", school: "IES" },
+            { name: "Sonal Surve", pct: "92.60", school: "ADARSH" },
+            { name: "Divya Gaikwad", pct: "92.40", school: "HOLY SPIRIT" },
+            { name: "Ankita Shankpal", pct: "92.40", school: "IES" },
+            { name: "Aditya Narayane", pct: "92.40", school: "IES" },
+            { name: "Neeraj Shukla", pct: "91.94", school: "NES" },
+            { name: "Jyoti Dubey", pct: "91.60", school: "HOLY SPIRIT" },
+            { name: "Kartik Shinde", pct: "91.60", school: "IES" },
+            { name: "Samiksha Yelve", pct: "91.60", school: "HEAVEN BELL" },
+            { name: "Sanket Rane", pct: "91.40", school: "HOLY SPIRIT" },
+            { name: "Priti Mundhe", pct: "91.40", school: "ADARSH" },
+            { name: "Saurabh Sariputra", pct: "91.27", school: "IES" },
+            { name: "Rudransh Shinde", pct: "91.20", school: "Balvikas" },
+            { name: "Sarthak Mhatre", pct: "91.00", school: "IES" },
+            { name: "Sayli Surve", pct: "91.00", school: "ADARSH" },
+            { name: "Nidhi Bhalerao", pct: "90.80", school: "Adarsh" },
+            { name: "Parth Kalaskar", pct: "90.00", school: "IES" },
+            { name: "Tejashree Mokashi", pct: "90.00", school: "IES" },
+            { name: "Isha Rane", pct: "90.00", school: "IES" }
+        ];
 
-    // ============================================================
-    // TOPPERS DATA
-    // ============================================================
-    const toppersData = [
-        { name: "Vaishnavi Sawant", pct: "95.80", school: "IES" },
-        { name: "Vaishnavi Patil", pct: "95.20", school: "Heaven Bell" },
-        { name: "Gargi Yadav", pct: "94.80", school: "Holy Spirit" },
-        { name: "Sushmita Ahirrao", pct: "94.73", school: "IES" },
-        { name: "Anand Khismatrao", pct: "93.82", school: "IES" },
-        { name: "Bhawna Chouhan", pct: "93.40", school: "FATIMA" },
-        { name: "Srushti Agnihotri", pct: "93.00", school: "Heaven Bell" },
-        { name: "Priyanka Thite", pct: "92.91", school: "IES" },
-        { name: "Abhijeet Howal", pct: "92.91", school: "IES" },
-        { name: "Tejal Jadhav", pct: "92.91", school: "IES" },
-        { name: "Sonal Surve", pct: "92.60", school: "ADARSH" },
-        { name: "Divya Gaikwad", pct: "92.40", school: "HOLY SPIRIT" },
-        { name: "Ankita Shankpal", pct: "92.40", school: "IES" },
-        { name: "Aditya Narayane", pct: "92.40", school: "IES" },
-        { name: "Neeraj Shukla", pct: "91.94", school: "NES" },
-        { name: "Jyoti Dubey", pct: "91.60", school: "HOLY SPIRIT" },
-        { name: "Kartik Shinde", pct: "91.60", school: "IES" },
-        { name: "Samiksha Yelve", pct: "91.60", school: "HEAVEN BELL" },
-        { name: "Sanket Rane", pct: "91.40", school: "HOLY SPIRIT" },
-        { name: "Priti Mundhe", pct: "91.40", school: "ADARSH" },
-        { name: "Saurabh Sariputra", pct: "91.27", school: "IES" },
-        { name: "Rudransh Shinde", pct: "91.20", school: "Balvikas" },
-        { name: "Sarthak Mhatre", pct: "91.00", school: "IES" },
-        { name: "Sayli Surve", pct: "91.00", school: "ADARSH" },
-        { name: "Nidhi Bhalerao", pct: "90.80", school: "Adarsh" },
-        { name: "Mukta Shanbhag", pct: "90.60", school: "IES" },
-        { name: "Snehal Narayane", pct: "90.60", school: "IES" },
-        { name: "Sudhanshu Singh", pct: "90.55", school: "CARMEL" },
-        { name: "Tanaya Daware", pct: "90.20", school: "Heaven Bell" },
-        { name: "Parth Kalaskar", pct: "90.00", school: "IES" },
-        { name: "Tejashree Mokashi", pct: "90.00", school: "IES" },
-        { name: "Isha Rane", pct: "90.00", school: "IES" },
-        { name: "Rutuja Thanage", pct: "90.00", school: "IES" },
-        { name: "Neeyati Narkar", pct: "90.00", school: "ST. ANTHONY" },
-        { name: "Deepali Kelambekar", pct: "90.00", school: "SAMARTH" },
-        { name: "Gunjan Patil", pct: "90.00", school: "IES" },
-        { name: "Manisha Birajdar", pct: "90.00", school: "IES" },
-        { name: "Arya Kadam", pct: "89.80", school: "IES" },
-        { name: "Ketaki Bhalekar", pct: "89.60", school: "Heaven Bell" },
-        { name: "Pooja Londhe", pct: "89.40", school: "IES" },
-        { name: "Yash Lanjekar", pct: "89.00", school: "Holy Spirit" },
-        { name: "Yojana Killedar", pct: "88.80", school: "HOLY SPIRIT" },
-        { name: "Dipesh Patil", pct: "88.60", school: "ADARSH" },
-        { name: "Ruchita Kolhe", pct: "88.60", school: "BALVIKAS" },
-        { name: "Atharva Shirke", pct: "88.40", school: "Heaven Bell" },
-        { name: "Pranav Dhangar", pct: "88.40", school: "NES" },
-        { name: "Harshwardhan Ghegadmal", pct: "88.00", school: "Adarsh" },
-        { name: "Siddhesh Jagtap", pct: "88.00", school: "IES" },
-        { name: "Viraj Dhanawade", pct: "87.80", school: "HOLY SPIRIT" },
-        { name: "Divya Chaudhary", pct: "87.80", school: "HOLY SPIRIT" },
-        { name: "Yashita Jadhav", pct: "86.80", school: "IES" },
-        { name: "Govind Nair", pct: "86.60", school: "HOLY SPIRIT" },
-        { name: "Nishanth Nimbalkar", pct: "86.40", school: "IES" },
-        { name: "Diksha Navale", pct: "86.40", school: "IES" },
-        { name: "Rakesh Chaudhary", pct: "86.20", school: "HOLY SPIRIT" },
-        { name: "Sakshi Nirgude", pct: "86.20", school: "NES" },
-        { name: "Shrishti Singh", pct: "86.00", school: "Gurukul International" },
-        { name: "Mahalaxmi T.", pct: "85.80", school: "Heaven Bell" },
-        { name: "Jinal Somwanshi", pct: "85.80", school: "HOLY SPIRIT" },
-        { name: "Shreshth Singh", pct: "85.60", school: "Heaven Bell" },
-        { name: "Rugveda Joshi", pct: "85.60", school: "HEAVEN BELL" },
-        { name: "Bhumika Kamble", pct: "85.00", school: "Heaven Bell" },
-        { name: "Vaishnavi Acharya", pct: "83.80", school: "Adarsh" },
-        { name: "Hetal Pandey", pct: "83.80", school: "SDM" },
-        { name: "Sailee Kamble", pct: "83.60", school: "Heaven Bell" },
-        { name: "Hitesh Rane", pct: "83.40", school: "IES" },
-        { name: "Sneha Hegde", pct: "83.40", school: "HEAVEN BELL" },
-        { name: "Vinay Dhankute", pct: "83.90", school: "Adarsh" },
-        { name: "Sanika Kudtarkar", pct: "83.00", school: "HEAVEN BELL" },
-        { name: "Arpita Sonkawade", pct: "82.60", school: "HOLY SPIRIT" },
-        { name: "Supriya Mitra", pct: "82.60", school: "HOLY SPIRIT" },
-        { name: "Prisha Alekar", pct: "82.40", school: "Adarsh" },
-        { name: "Aarya Rane", pct: "82.49", school: "IES" },
-        { name: "Pranav Kshirsagar", pct: "82.20", school: "HOLY SPIRIT" },
-        { name: "Ruchira Bangar", pct: "82.20", school: "SDM" },
-        { name: "Riddhesh Dagar", pct: "81.80", school: "Heaven Bell" },
-        { name: "Om Pankar", pct: "81.80", school: "IES" },
-        { name: "Sahil Gawas", pct: "81.80", school: "IES" },
-        { name: "Aryan Bhimani", pct: "81.60", school: "IES" },
-        { name: "Siddhesh Wagh", pct: "81.60", school: "HOLY SPIRIT" },
-        { name: "Rudra Jawale", pct: "81.40", school: "Heaven Bell" },
-        { name: "Sarthak Raut", pct: "81.40", school: "Heaven Bell" },
-        { name: "Mrunal Patil", pct: "81.00", school: "Heaven Bell" },
-        { name: "Sandeep Khodade", pct: "81.00", school: "Adarsh" },
-        { name: "Roshani Koli", pct: "81.00", school: "NES" },
-        { name: "Tanmay Dingankar", pct: "81.00", school: "NES" },
-        { name: "Tanmay Dubey", pct: "80.80", school: "Heaven Bell" },
-        { name: "Vedant Chaudhari", pct: "80.00", school: "NES" },
-        { name: "Shubham Gurav", pct: "80.00", school: "Don Bosco" }
-    ];
+        // ALL 28 IMAGES
+        const galleryImages = [
+            "https://i.postimg.cc/rD77VfZc/IMG-20250103-WA0017.jpg",
+            "https://i.postimg.cc/HrFFY6vd/IMG-20250306-WA0025.jpg",
+            "https://i.postimg.cc/9DssmLgm/IMG-20250321-WA0001.jpg",
+            "https://i.postimg.cc/k2LLJTYB/IMG-20250530-175856.jpg",
+            "https://i.postimg.cc/FYwwrTC3/IMG-20250629-WA0240.jpg",
+            "https://i.postimg.cc/YvTTrdDg/IMG-20250630-WA0001.jpg",
+            "https://i.postimg.cc/hXNND2Zv/poster-2023-03-22-040014.png",
+            "https://i.postimg.cc/FYwwrTW8/poster-2023-06-02-054604.png",
+            "https://i.postimg.cc/yD221LpN/poster-2023-06-02-070230.png",
+            "https://i.postimg.cc/rD77VfZd/Screenshot-2025-06-08-12-15-38-570-splendid-postermaker-designer.jpg",
+            "https://i.postimg.cc/K1CCG0pM/Screenshot-2025-06-14-13-27-03-311-com-miui-gallery.jpg",
+            "https://i.postimg.cc/4ntys08n/IMG-20250309-WA0013.jpg",
+            "https://i.postimg.cc/SXJQ512j/IMG-20250309-WA0014.jpg",
+            "https://i.postimg.cc/jnQRNG9B/IMG-20250309-WA0015.jpg",
+            "https://i.postimg.cc/JshRDYQQ/IMG-20250309-WA0017.jpg",
+            "https://i.postimg.cc/KktbS6m6/IMG-20250310-WA0001.jpg",
+            "https://i.postimg.cc/Btc82y2h/IMG-20250310-WA0002.jpg",
+            "https://i.postimg.cc/mtmt5HXq/IMG-20250310-WA0003.jpg",
+            "https://i.postimg.cc/d7y33SqB/IMG-20250310-WA0005.jpg",
+            "https://i.postimg.cc/SYyxZScf/IMG-20250310-WA0006.jpg",
+            "https://i.postimg.cc/K4FjcNCW/IMG-20250310-WA0007.jpg",
+            "https://i.postimg.cc/6ybp0NqZ/IMG-20250310-WA0008.jpg",
+            "https://i.postimg.cc/G8jcTW6V/IMG-20250310-WA0009.jpg",
+            "https://i.postimg.cc/hJLnHF4G/IMG-20250310-WA0010.jpg",
+            "https://i.postimg.cc/sGXRQvYg/IMG-20250310-WA0011.jpg",
+            "https://i.postimg.cc/qgMrZZ9S/IMG-20250310-WA0012.jpg",
+            "https://i.postimg.cc/zV41vDVy/IMG-20250310-WA0013.jpg",
+            "https://i.postimg.cc/JyLV3T3m/IMG-20250310-WA0014.jpg"
+        ];
 
-    function renderToppers() {
-        const tbody = document.getElementById('toppersBody');
-        tbody.innerHTML = '';
-        toppersData.forEach((t, i) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="rank">${i + 1}</td>
-                <td>${t.name}</td>
-                <td>${t.pct}%</td>
-                <td class="school">${t.school}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-    renderToppers();
+        const videoUrls = [
+            "https://www.youtube.com/embed/WYI87jKmInw",
+            "https://www.youtube.com/embed/UPc1Oqk2FVs",
+            "https://www.youtube.com/embed/4NNj-THiY1c",
+            "https://www.youtube.com/embed/_GGULN14G24",
+            "https://www.youtube.com/embed/VwZM6aAAdZk",
+            "https://www.youtube.com/embed/-KaMCNJ88po",
+            "https://www.youtube.com/embed/hMdRW6nb1Rw",
+            "https://www.youtube.com/embed/5-aPwab21WA",
+            "https://www.youtube.com/embed/LwOakfOtyrs",
+            "https://www.youtube.com/embed/iHjzCXMJIlA",
+            "https://www.youtube.com/embed/Li6DfZ_RRss",
+            "https://www.youtube.com/embed/PSgHo4kAgnI",
+            "https://www.youtube.com/embed/3qWgbKIQOQA",
+            "https://www.youtube.com/embed/EwuGqHGSwuQ"
+        ];
 
-    // ============================================================
-    // TOAST
-    // ============================================================
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        document.getElementById('toastMessage').textContent = msg;
-        t.classList.add('show');
-        clearTimeout(t._timeout);
-        t._timeout = setTimeout(() => t.classList.remove('show'), 3500);
-    }
+        // ===== NAVIGATION =====
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(pageId + 'Page');
+            if(targetPage) targetPage.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-    // ============================================================
-    // NAVIGATION
-    // ============================================================
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('homePage').classList.add('active');
-        document.querySelector('.nav-links a[data-page="home"]').classList.add('active');
-        renderGallery();
-        renderVideos();
-    });
+        // ===== TOPPERS AS COLORFUL CARDS =====
+        function renderToppers() {
+            const container = document.getElementById('toppersCardsContainer');
+            container.innerHTML = '';
+            const colors = ['#EC4899', '#14B8A6', '#D4A843', '#8B5CF6', '#F59E0B', '#3B82F6', '#EF4444', '#10B981', '#8B5CF6', '#EC4899'];
+            const bgClasses = ['bg-pink-100 text-pink-600', 'bg-teal-100 text-teal-600', 'bg-amber-100 text-amber-600', 'bg-purple-100 text-purple-600', 'bg-orange-100 text-orange-600', 'bg-blue-100 text-blue-600', 'bg-red-100 text-red-600', 'bg-emerald-100 text-emerald-600', 'bg-purple-100 text-purple-600', 'bg-pink-100 text-pink-600'];
+            toppersData.slice(0, 10).forEach((topper, index) => {
+                const card = document.createElement('div');
+                card.className = `neumo p-6 rounded-2xl text-center hover:shadow-xl transition-all transform hover:-translate-y-2`;
+                card.style.borderTop = `4px solid ${colors[index % colors.length]}`;
+                card.innerHTML = `
+                    <div class="text-4xl font-black ${bgClasses[index % bgClasses.length]}">#${index + 1}</div>
+                    <h4 class="text-xl font-bold mt-2">${topper.name}</h4>
+                    <div class="text-3xl font-black text-accent mt-1">${topper.pct}%</div>
+                    <p class="text-xs text-gray-500 mt-2">${topper.school}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
 
-    document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
-        link.addEventListener('click', function(e) {
+        // ===== TESTIMONIALS (3 different quotes) =====
+        function renderTestimonials() {
+            const container = document.getElementById('testimonialsContainer');
+            const sample = toppersData.slice(0, 3);
+            const quotes = [
+                "Shree Parth Academy gave me the confidence to achieve my dreams! The teachers here are truly world-class.",
+                "I improved my grades significantly after joining this academy. The personalized attention is unmatched.",
+                "The best decision I made was enrolling here. Thank you, Shree Parth, for shaping my future!"
+            ];
+            container.innerHTML = '';
+            sample.forEach((topper, index) => {
+                const card = document.createElement('div');
+                card.className = 'neumo p-6 rounded-2xl text-center';
+                card.innerHTML = `
+                    <i class="fas fa-quote-left text-accent text-2xl mb-4 block"></i>
+                    <p class="text-xs text-gray-600 italic mb-4">"${quotes[index]}"</p>
+                    <h4 class="font-bold text-base mb-1">${topper.name}</h4>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-accent/20 text-accent-dark">${topper.pct}% • ${topper.school}</span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ===== GALLERY =====
+        function renderGallery() {
+            const container = document.getElementById('galleryGrid');
+            container.innerHTML = '';
+            galleryImages.forEach(url => {
+                const item = document.createElement('div');
+                item.className = 'aspect-square rounded-xl overflow-hidden cursor-pointer border border-gray-200 shadow-sm hover:shadow-md transition-all group';
+                item.onclick = () => openModal(url);
+                item.innerHTML = `<img src="${url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" alt="Gallery photo" />`;
+                container.appendChild(item);
+            });
+        }
+
+        function openModal(url) {
+            document.getElementById('modalImage').src = url;
+            document.getElementById('imageModal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+        }
+
+        // ===== VIDEOS =====
+        function renderVideos() {
+            const container = document.getElementById('videoGrid');
+            container.innerHTML = '';
+            videoUrls.forEach(url => {
+                const card = document.createElement('div');
+                card.className = 'aspect-video rounded-2xl overflow-hidden border border-gray-200 shadow-md';
+                card.innerHTML = `<iframe class="w-full h-full" src="${url}" allowfullscreen loading="lazy"></iframe>`;
+                container.appendChild(card);
+            });
+        }
+
+        // ===== WHATSAPP ENQUIRY =====
+        function handleEnquirySubmit(e) {
             e.preventDefault();
-            const page = this.dataset.page;
-            const targetId = page + 'Page';
-            const target = document.getElementById(targetId);
-            
-            if (!target) return;
-            
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            target.classList.add('active');
-            document.querySelectorAll('.nav-links a[data-page]').forEach(a => a.classList.remove('active'));
-            this.classList.add('active');
+            const name = document.getElementById('enqName').value;
+            const phone = document.getElementById('enqPhone').value;
+            const course = document.getElementById('enqCourse').value;
+            const msg = document.getElementById('enqMessage').value;
+            const text = `*New Admission Inquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}%0A*Message:* ${msg}`;
+            window.open(`https://wa.me/919011395913?text=${text}`, '_blank');
+        }
+
+        // ===== DOM INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderToppers();
+            renderTestimonials();
+            renderGallery();
+            renderVideos();
         });
-    });
-</script>
+    </script>
 </body>
 </html>
