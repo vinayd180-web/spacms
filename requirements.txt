@@ -20,7 +20,6 @@ charset-normalizer==3.4.7
 click==8.4.2
 cloudinary==1.46.0
 colorama==0.4.1
-cryptography @ file:///home/builder/.termux-build/python-cryptography/src
 cssselect2==0.9.0
 defusedxml==0.7.1
 diff-match-patch==20241021
@@ -75,7 +74,6 @@ packaging==26.2
 phonenumbers==8.10.2
 pillow==12.3.0
 plotly==5.17.0
-proot-distro @ file:///home/builder/.termux-build/proot-distro/src
 propcache==0.5.2
 proto-plus==1.28.1
 protobuf==7.35.1
@@ -129,3 +127,4 @@ whitenoise==6.7.0
 yarl==1.24.5
 zopfli==0.4.3
 gunicorn
+cryptography==42.0.5
