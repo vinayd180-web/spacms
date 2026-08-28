@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Timetable Management{% endblock %}
+{% block content %}
+<h2>Timetable Management</h2>
+<a href="{% url 'admin_timetable_add' %}" class="btn btn-primary mb-3">Add Timetable Entry</a>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Class</th><th>Day</th><th>Period</th><th>Subject</th><th>Teacher</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+        {% for t in timetable %}
+        <tr>
+            <td>{{ t.class_room }}</td>
+            <td>{{ t.day }}</td>
+            <td>{{ t.period }}</td>
+            <td>{{ t.subject }}</td>
+            <td>{{ t.teacher.user.get_full_name|default:t.teacher.user.username }}</td>
+            <td>{{ t.start_time }} - {{ t.end_time }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

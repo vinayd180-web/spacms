@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Add Work Log{% endblock %}
+{% block content %}
+<h2>Add Work Log</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Date</label>
+    <input type="date" name="date" class="form-control" required>
+    <label>In Time</label>
+    <input type="time" name="in_time" class="form-control" required>
+    <label>Out Time</label>
+    <input type="time" name="out_time" class="form-control" required>
+    <label>Class</label>
+    <select name="class_room" class="form-control">
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <label>Subject</label>
+    <input type="text" name="subject" class="form-control" required>
+    <label>Syllabus Covered</label>
+    <textarea name="syllabus_covered" class="form-control" required></textarea>
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+</form>
+{% endblock %}

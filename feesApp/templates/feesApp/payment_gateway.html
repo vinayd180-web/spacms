@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %}Fee Payment - Shree Parth Academy{% endblock %}
+{% block extra_css %}
+<style>
+    :root {
+        --gold: #B8922E;
+        --teal: #0D9488;
+        --dark: #0F172A;
+        --light: #F8F9FA;
+        --whatsapp: #25D366;
+    }
+    .payment-container {
+        background: white;
+        max-width: 500px;
+        width: 100%;
+        margin: 20px auto;
+        border-radius: 25px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        overflow: hidden;
+    }
+    .header {
+        background: linear-gradient(135deg, var(--gold), var(--teal));
+        padding: 30px 20px;
+        text-align: center;
+        color: white;
+    }
+    .header img {
+        height: 60px;
+        margin-bottom: 10px;
+    }
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    .header p {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        letter-spacing: 1px;
+    }
+    .body {
+        padding: 25px;
+    }
+    .amount-display {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .amount-display input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    .btn {
+        padding: 15px 10px;
+        border: none;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .btn-qr { background: #1E293B; color: white; }
+    .btn-upi { background: linear-gradient(135deg, #7C3AED, #5B21B6); color: white; }
+    .btn-whatsapp { background: var(--whatsapp); color: white; }
+    .bank-details {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 15px;
+    }
+    .bank-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.85rem;
+    }
+    .qr-modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .qr-modal.open { display: flex; }
+    .qr-content {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 350px;
+        width: 100%;
+    }
+    .qr-content img {
+        width: 250px;
+        height: 250px;
+        object-fit: contain;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <div class="header">
+        <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo">
+        <h1>Shree Parth Academy</h1>
+        <p>✦ FEE PAYMENT PORTAL ✦</p>
+    </div>
+    <div class="body">
+        <div class="amount-display">
+            <label>Enter Amount</label>
+            <input type="number" id="amountInput" placeholder="e.g., 5000" min="1">
+        </div>
+        <button class="btn btn-qr" onclick="openQR()">Show QR Code</button>
+        <button class="btn btn-upi" onclick="openUPI()">Pay via UPI App</button>
+        <button class="btn btn-whatsapp" onclick="sendWhatsApp()">Send Payment Confirmation</button>
+
+        <div class="bank-details">
+            <h3>Bank Transfer Details</h3>
+            <div class="bank-row"><span>Bank Name</span><span>State Bank of India</span></div>
+            <div class="bank-row"><span>Account Number</span><span>38616877754</span></div>
+            <div class="bank-row"><span>IFSC Code</span><span>SBIN0021999</span></div>
+            <div class="bank-row"><span>Branch</span><span>Katrap, Badlapur (E)</span></div>
+            <div class="bank-row"><span>UPI ID</span><span>shreeparthacademy2009-2@okaxis</span></div>
+        </div>
+        <p style="text-align:center;font-size:0.75rem;color:#999;margin-top:15px;">After payment, please send confirmation on WhatsApp for instant receipt.</p>
+    </div>
+</div>
+
+<div class="qr-modal" id="qrModal">
+    <div class="qr-content">
+        <img src="https://i.postimg.cc/TwxDxmyV/IMG-20260708-WA0002.jpg" alt="UPI QR Code">
+        <h4>Scan to Pay</h4>
+        <p>UPI ID: shreeparthacademy2009-2@okaxis</p>
+        <button class="btn btn-upi" onclick="closeQR()">Close</button>
+    </div>
+</div>
+
+<script>
+    const UPI_ID = "shreeparthacademy2009-2@okaxis";
+    const ACADEMY_NAME = "Shree Parth Academy";
+    const WHATSAPP_NUMBER = "919011395913";
+
+    function getAmount() {
+        return document.getElementById('amountInput').value || '';
+    }
+    function openQR() {
+        document.getElementById('qrModal').classList.add('open');
+    }
+    function closeQR() {
+        document.getElementById('qrModal').classList.remove('open');
+    }
+    function openUPI() {
+        const amount = getAmount();
+        let upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(ACADEMY_NAME)}&cu=INR`;
+        if (amount) upiLink += `&am=${amount}`;
+        window.location.href = upiLink;
+    }
+    function sendWhatsApp() {
+        const amount = getAmount();
+        let message = `*Payment Confirmation - Shree Parth Academy*%0A%0A`;
+        if (amount) message += `*Amount:* ₹${amount}%0A`;
+        message += `*Payment Method:* UPI/Bank Transfer%0A`;
+        message += `*Transaction ID:* (Please enter your transaction ID)%0A`;
+        message += `*Student Name:* (Enter student name)%0A`;
+        message += `%0A_Please confirm my payment._`;
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+    }
+</script>
+{% endblock %}

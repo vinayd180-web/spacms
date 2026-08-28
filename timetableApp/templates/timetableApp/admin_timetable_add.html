@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Add Timetable{% endblock %}
+{% block content %}
+<h2>Add Timetable Entry</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Class</label>
+    <select name="class_room" class="form-control" required>
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <label>Day</label>
+    <select name="day" class="form-control" required>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+    </select>
+    <label>Period</label>
+    <input type="number" name="period" min="1" max="10" class="form-control" required>
+    <label>Subject</label>
+    <input type="text" name="subject" class="form-control" required>
+    <label>Teacher</label>
+    <select name="teacher" class="form-control" required>
+        {% for t in teachers %}
+        <option value="{{ t.id }}">{{ t.user.get_full_name|default:t.user.username }}</option>
+        {% endfor %}
+    </select>
+    <label>Start Time</label>
+    <input type="time" name="start_time" class="form-control" required>
+    <label>End Time</label>
+    <input type="time" name="end_time" class="form-control" required>
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+</form>
+{% endblock %}

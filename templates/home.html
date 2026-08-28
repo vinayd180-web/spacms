@@ -4,11 +4,14 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
-{% block title %}Scholaroid - Home{% endblock %}
+{% block title %}Shree Parth Academy - Home{% endblock %}
 {% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" style="background: #f8f9fa !important;">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{% url 'home' %}"><i class="fa-solid fa-graduation-cap"></i> Scholaroid</a>
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+            <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" height="44" class="me-2">
+            Shree Parth Academy
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,7 +44,8 @@
 
 {% block content %}
 <div class="container py-5">
-    <h2 class="text-center mb-4">Welcome to School Management System</h2>
+    <h2 class="text-center mb-4">Welcome to Shree Parth Academy</h2>
+    <p class="text-center text-muted mb-4">✦ AN EMPEROR OF KNOWLEDGE ✦</p>
     {% if user.is_authenticated %}
         <p class="text-center text-muted mb-5">You are logged in as {{ user.role }}.</p>
         <div class="row g-4 justify-content-center">

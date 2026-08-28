@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}My Timetable{% endblock %}
+{% block content %}
+<h2>My Timetable</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Day</th><th>Period</th><th>Subject</th><th>Teacher</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+        {% for t in timetable %}
+        <tr>
+            <td>{{ t.day }}</td>
+            <td>{{ t.period }}</td>
+            <td>{{ t.subject }}</td>
+            <td>{{ t.teacher.user.get_full_name|default:t.teacher.user.username }}</td>
+            <td>{{ t.start_time }} - {{ t.end_time }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No timetable available.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

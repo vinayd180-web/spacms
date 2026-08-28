@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     "channels",
 
     "accountsApp",
+    "analyticsApp",
+    "backupApp",
+    "feesApp",
+    "resultsApp",
     "attendanceApp",
     "classesApp",
     "examsApp",
@@ -46,6 +50,8 @@ INSTALLED_APPS = [
     "teachersApp",
     "parentsApp",
     "resourcesApp",
+    "timetableApp",
+    "worklogApp",
     "social_django",
 ]
 
@@ -192,3 +198,17 @@ if RENDER_EXTERNAL_HOSTNAME:
     render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
     if render_origin not in CSRF_TRUSTED_ORIGINS:
         CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Shree Parth Academy Admin",
+    "site_header": "Shree Parth Academy",
+    "site_brand": "Shree Parth Academy",
+    "welcome_sign": "Welcome to Shree Parth Academy Admin Panel",
+    "site_logo": "fa-solid fa-graduation-cap",
+    "login_logo": "fa-solid fa-graduation-cap",
+    "copyright": "Shree Parth Academy",
+    "theme": "cosmo",
+    "custom_css": "admin/css/custom_admin.css",  # Options: cosmo, flatly, darkly, litera, lumen, minty, pulse, sandstone, simplex, sketchy, spacelab, united, yeti
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}

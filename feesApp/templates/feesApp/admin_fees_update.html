@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Update Fee{% endblock %}
+{% block content %}
+<h2>Update Fee Status</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Status</label>
+    <select name="status" class="form-control">
+        <option value="pending" {% if fee.status == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="paid" {% if fee.status == 'paid' %}selected{% endif %}>Paid</option>
+    </select>
+    <label>Transaction ID</label>
+    <input type="text" name="transaction_id" value="{{ fee.transaction_id }}" class="form-control">
+    <button type="submit" class="btn btn-primary mt-2">Save</button>
+</form>
+{% endblock %}

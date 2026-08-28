@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}My Analytics{% endblock %}
+{% block content %}
+<h2>My Analytics</h2>
+<div class="row">
+    <div class="col-md-4"><div class="card bg-primary text-white mb-3"><div class="card-body text-center"><h5>Total Fees</h5><h3>₹{{ total_fees }}</h3></div></div></div>
+    <div class="col-md-4"><div class="card bg-success text-white mb-3"><div class="card-body text-center"><h5>Paid Fees</h5><h3>₹{{ paid_fees }}</h3></div></div></div>
+    <div class="col-md-4"><div class="card bg-danger text-white mb-3"><div class="card-body text-center"><h5>Pending Fees</h5><h3>₹{{ pending_fees }}</h3></div></div></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"><div class="card bg-info text-white mb-3"><div class="card-body text-center"><h5>Average Marks</h5><h3>{{ avg_marks|floatformat:2 }}</h3></div></div></div>
+    <div class="col-md-4"><div class="card bg-warning text-white mb-3"><div class="card-body text-center"><h5>Attendance</h5><h3>{{ present_count }} / {{ total_attendance }}</h3></div></div></div>
+    <div class="col-md-4"><div class="card bg-secondary text-white mb-3"><div class="card-body text-center"><h5>Attendance %</h5><h3>{{ attendance_percentage|floatformat:2 }}%</h3></div></div></div>
+</div>
+{% endblock %}

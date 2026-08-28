@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Add Marks{% endblock %}
+{% block content %}
+<h2>Add Marks</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Student</label>
+    <select name="student" class="form-control">
+        {% for s in students %}
+        <option value="{{ s.id }}">{{ s }}</option>
+        {% endfor %}
+    </select>
+    <label>Exam</label>
+    <select name="exam" class="form-control">
+        {% for e in exams %}
+        <option value="{{ e.id }}">{{ e }}</option>
+        {% endfor %}
+    </select>
+    <label>Marks</label>
+    <input type="number" step="0.01" name="marks" class="form-control" required>
+    <label>Grade</label>
+    <input type="text" name="grade" class="form-control">
+    <label>Remarks</label>
+    <textarea name="remarks" class="form-control"></textarea>
+    <button type="submit" class="btn btn-success mt-2">Save</button>
+</form>
+{% endblock %}

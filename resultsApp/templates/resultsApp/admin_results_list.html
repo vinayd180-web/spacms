@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Results Management{% endblock %}
+{% block content %}
+<h2>Results Management</h2>
+<a href="{% url 'admin_add_result' %}" class="btn btn-primary mb-3">Add Marks</a>
+<table class="table">
+    <thead>
+        <tr><th>Student</th><th>Exam</th><th>Marks</th><th>Grade</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+        {% for r in results %}
+        <tr>
+            <td>{{ r.student }}</td>
+            <td>{{ r.exam }}</td>
+            <td>{{ r.marks }}</td>
+            <td>{{ r.grade }}</td>
+            <td><a href="{% url 'admin_update_result' r.id %}" class="btn btn-sm btn-warning">Update</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -31,6 +31,12 @@ urlpatterns = [
 
     path('', home, name='home'),
     path('accounts/', include('accountsApp.urls')),
+    path('fees/', include('feesApp.urls')),
+    path('analytics/', include('analyticsApp.urls')),
+    path('backup/', include('backupApp.urls')),
+    path('timetable/', include('timetableApp.urls')),
+    path('worklog/', include('worklogApp.urls')),
+    path('results/', include('resultsApp.urls')),
     path('students/', include('studentsApp.urls')),
     path('teachers/', include('teachersApp.urls')),
     path('parents/', include('parentsApp.urls')),

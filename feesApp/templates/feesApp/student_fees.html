@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}My Fees{% endblock %}
+{% block content %}
+<h2>My Fees</h2>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body text-center">
+                <h5 class="card-title">Total Fees</h5>
+                <h3>₹{{ total_fees }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body text-center">
+                <h5 class="card-title">Paid Fees</h5>
+                <h3>₹{{ paid_fees }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body text-center">
+                <h5 class="card-title">Pending Fees</h5>
+                <h3>₹{{ pending_fees }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<button onclick="window.print()" class="btn btn-secondary mb-3">Print Receipt</button>
+<div class="text-center mb-4 d-none d-print-block">
+        <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" height="80">
+        <h2 class="mb-0">Shree Parth Academy</h2>
+        <p class="mb-0">✦ AN EMPEROR OF KNOWLEDGE ✦</p>
+        <p class="mb-0">Ground Floor, Tryambak Heaven 2, Beside Holy Spirit High School, Surval Chowk, MIDC Shirgaon, Badlapur (E), Maharashtra 421503</p>
+        <h4>Fees Receipt</h4>
+        <hr>
+    </div>
+<table class="table">
+    <thead>
+        <tr><th>Student ID</th><th>Amount</th><th>Status</th><th>Due Date</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+        {% for fee in fees_list %}
+        <tr>
+            <td>{{ fee.student.id }}</td>
+            <td>{{ fee.amount }}</td>
+            <td>{{ fee.status }}</td>
+            <td>{{ fee.due_date }}</td>
+            <td>
+                {% if fee.status == 'pending' %}
+                <a href="upi://pay?pa={{ upi_id }}&pn=ShreeParthAcademy&am={{ fee.amount }}&cu=INR" class="btn btn-primary btn-sm">Pay via UPI</a>
+                <a href="https://wa.me/{{ whatsapp_number }}?text=Hi,%20I%20have%20paid%20fees%20of%20{{ fee.amount }}.%20Receipt%20attached." target="_blank" class="btn btn-success btn-sm">Submit Receipt on WhatsApp</a>
+                {% else %}
+                <span class="text-success">Paid</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No fees found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
