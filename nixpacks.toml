@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["python312", "python312Packages.pip"]
+nixPkgs = ["python312"]
 
 [phases.install]
-cmds = ["pip install -r requirements.txt"]
+cmds = ["python -m venv /app/.venv", "/app/.venv/bin/pip install -r requirements.txt"]
 
 [phases.build]
-cmds = ["python manage.py collectstatic --noinput"]
+cmds = ["/app/.venv/bin/python manage.py collectstatic --noinput"]
 
 [start]
-cmd = "python manage.py migrate && gunicorn managementProject.wsgi:application --bind 0.0.0.0:$PORT"
+cmd = "/app/.venv/bin/daphne -b 0.0.0.0 -p $PORT managementProject.asgi:application"
