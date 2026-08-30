@@ -16,14 +16,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY", default="insecure-development-key-change-me")
 DEBUG = config("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,shreeparthacademy.pythonanywhere.com").split(",") if h.strip()]
 
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1").split(",")
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1,https://shreeparthacademy.pythonanywhere.com").split(",") if o.strip()]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 AUTH_USER_MODEL = "accountsApp.User"
 
 INSTALLED_APPS = [
@@ -54,6 +52,8 @@ INSTALLED_APPS = [
     "resourcesApp",
     "timetableApp",
     "worklogApp",
+    "homeworkApp",
+    "notificationApp",
     "social_django",
 ]
 
@@ -193,13 +193,7 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
 USE_X_FORWARDED_HOST = True
 
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in config(
-    "CSRF_TRUSTED_ORIGINS", default=""
-).split(",") if o.strip()]
-if RENDER_EXTERNAL_HOSTNAME:
-    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
-    if render_origin not in CSRF_TRUSTED_ORIGINS:
-        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
 
 JAZZMIN_SETTINGS = {
     "site_title": "Shree Parth Academy Admin",
