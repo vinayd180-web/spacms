@@ -25,7 +25,6 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 AUTH_USER_MODEL = "accountsApp.User"
 
 INSTALLED_APPS = [
-    "jazzmin",
     # Cloudinary apps (optional) — enabled when CLOUDINARY_URL is set below
     "cloudinary",
     "cloudinary_storage",
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     "worklogApp",
     "homeworkApp",
     "notificationApp",
+    "quizApp",
     "social_django",
 ]
 
@@ -152,8 +152,13 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = "/data/data/com.termux/files/home/Scholaroid/staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

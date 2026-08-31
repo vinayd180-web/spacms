@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}My Homework{% endblock %}
+{% block content %}
+<h2>My Homework</h2>
+<table class="table">
+    <thead><tr><th>Title</th><th>Subject</th><th>Description</th><th>Due Date</th></tr></thead>
+    <tbody>
+        {% for h in homeworks %}
+        <tr><td>{{ h.title }}</td><td>{{ h.subject }}</td><td>{{ h.description }}</td><td>{{ h.due_date }}</td></tr>
+        {% empty %}
+        <tr><td colspan="4">No homework assigned.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Take Attendance{% endblock %}
+{% block content %}
+<h2>Take Attendance</h2>
+{% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}
+        {{ m }}
+    {% endfor %}
+</div>
+{% endif %}
+<form method="get" class="mb-3">
+    <label>Select Date:</label>
+    <input type="date" name="date" value="{{ today }}" class="form-control mb-2" onchange="this.form.submit()">
+</form>
+<table class="table">
+    <thead>
+        <tr><th>Class</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+        {% for c in classes %}
+        <tr>
+            <td>{{ c }}</td>
+            <td><a href="{% url 'mark_attendance' c.id %}" class="btn btn-primary btn-sm">Take Attendance</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">No classes assigned.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

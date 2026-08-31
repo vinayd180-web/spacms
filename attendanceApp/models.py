@@ -1,4 +1,5 @@
 from django.db import models
+from classesApp.models import ClassRoom
 from studentsApp.models import Student
 from teachersApp.models import Teacher
 
@@ -10,6 +11,7 @@ class Attendance(models.Model):
     ]
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    class_room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE, null=True, blank=True)
     date = models.DateField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 

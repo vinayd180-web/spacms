@@ -2,6 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Attendance
 from studentsApp.models import Student
 from classesApp.models import ClassRoom
@@ -45,3 +46,16 @@ def admin_attendance_list(request):
     return render(request, "attendanceApp/admin_attendance_list.html", {
         "records": records
     })
+from django.shortcuts import get_object_or_404
+from teachersApp.models import Teacher
+
+def teacher_attendance(request):
+    teacher = get_object_or_404(Teacher, user=request.user)
+    classes = teacher.assigned_class.all()
+    from datetime import date
+    return render(request, 'attendanceApp/teacher_attendance.html', {'classes': classes, 'today': date.today().isoformat()})
+
+def teacher_attendance_history(request):
+    teacher = get_object_or_404(Teacher, user=request.user)
+    attendances = Attendance.objects.filter(teacher=teacher).order_by('-date')
+    return render(request, 'attendanceApp/teacher_attendance_history.html', {'attendances': attendances})

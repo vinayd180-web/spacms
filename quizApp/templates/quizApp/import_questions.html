@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Import Questions{% endblock %}
+{% block content %}
+<h2>Import Questions - {{ quiz.title }}</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Format (Paste Mode)</h5>
+        <p>हर line में एक question, इस format में:</p>
+        <code>Question|Option A|Option B|Option C|Option D|Correct Answer|Marks</code>
+        <p>Example:</p>
+        <code>What is 2+2?|3|4|5|6|B|1</code>
+    </div>
+</div>
+
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    <input type="hidden" name="paste_mode" value="1">
+    <label>Paste Questions</label>
+    <textarea name="questions_text" class="form-control mb-2" rows="10" placeholder="Question|A|B|C|D|Correct|Marks"></textarea>
+    <button type="submit" class="btn btn-primary">Import Pasted Questions</button>
+</form>
+
+<hr>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Upload CSV File</label>
+    <input type="file" name="file" class="form-control mb-2" accept=".csv">
+    <button type="submit" class="btn btn-success">Import CSV</button>
+</form>
+
+<a href="{% url 'add_questions' quiz.id %}" class="btn btn-secondary mt-3">Back to Questions</a>
+{% endblock %}

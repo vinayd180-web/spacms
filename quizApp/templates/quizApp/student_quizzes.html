@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Quizzes{% endblock %}
+{% block content %}
+<h2>Available Quizzes</h2>
+<table class="table">
+    <thead><tr><th>Title</th><th>Subject</th><th>Time</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+        {% for q in quizzes %}
+        <tr>
+            <td>{{ q.title }}</td>
+            <td>{{ q.subject }}</td>
+            <td>{{ q.time_limit }} min</td>
+            <td>
+                {% for r in results %}
+                    {% if r.quiz.id == q.id %}
+                        <span class="text-success">Taken - {{ r.percentage|floatformat:1 }}%</span>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for r in results %}
+                    {% if r.quiz.id == q.id %}
+                        <span class="badge bg-success">Completed</span>
+                    {% else %}
+                        <a href="{% url 'take_quiz' q.id %}" class="btn btn-sm btn-primary">Take Quiz</a>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No quizzes available.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="mt-4">My Quiz History</h3>
+<table class="table">
+    <thead><tr><th>Quiz</th><th>Score</th><th>Total</th><th>Percentage</th><th>Date</th></tr></thead>
+    <tbody>
+        {% for r in results %}
+        <tr>
+            <td>{{ r.quiz.title }}</td>
+            <td>{{ r.score }}</td>
+            <td>{{ r.total_marks }}</td>
+            <td>{{ r.percentage|floatformat:2 }}%</td>
+            <td>{{ r.submitted_at|date:"d M Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No results yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

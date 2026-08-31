@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Create Quiz{% endblock %}
+{% block content %}
+<h2>Create Quiz</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Quiz Title" class="form-control mb-2" required>
+    <input type="text" name="subject" placeholder="Subject" class="form-control mb-2" required>
+    <select name="class_room" class="form-control mb-2">
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" name="time_limit" placeholder="Time Limit (minutes)" class="form-control mb-2" value="30">
+    <button type="submit" class="btn btn-primary">Next - Add Questions</button>
+</form>
+{% endblock %}

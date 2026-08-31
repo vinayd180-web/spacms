@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Homework{% endblock %}
+{% block content %}
+<h2>Manage Homework</h2>
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title" class="form-control mb-2" required>
+    <textarea name="description" placeholder="Description" class="form-control mb-2" required></textarea>
+    <input type="text" name="subject" placeholder="Subject" class="form-control mb-2" required>
+    <select name="class_room" class="form-control mb-2">
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <input type="date" name="due_date" class="form-control mb-2" required>
+    <button type="submit" class="btn btn-primary">Add Homework</button>
+</form>
+
+<h4>Existing Homework</h4>
+<table class="table">
+    <thead><tr><th>Title</th><th>Subject</th><th>Class</th><th>Due Date</th></tr></thead>
+    <tbody>
+        {% for h in homeworks %}
+        <tr><td>{{ h.title }}</td><td>{{ h.subject }}</td><td>{{ h.class_room }}</td><td>{{ h.due_date }}</td></tr>
+        {% empty %}
+        <tr><td colspan="4">No homework added.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
