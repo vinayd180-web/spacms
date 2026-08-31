@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY", default="insecure-development-key-change-me")
 DEBUG = config("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,shreeparthacademy.pythonanywhere.com").split(",") if h.strip()]
+ALLOWED_HOSTS = ["shreeparth-academy.onrender.com", "shreeparthacademy.pythonanywhere.com", "localhost", "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1,https://shreeparthacademy.pythonanywhere.com").split(",") if o.strip()]
 
