@@ -159,8 +159,8 @@ STATICFILES_FINDERS = [
 
 STATIC_URL = "/static/"
 STATIC_ROOT = "/data/data/com.termux/files/home/Scholaroid/staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -200,16 +200,4 @@ USE_X_FORWARDED_HOST = True
 
 
 
-JAZZMIN_SETTINGS = {
-    "site_title": "Shree Parth Academy Admin",
-    "site_header": "Shree Parth Academy",
-    "site_brand": "Shree Parth Academy",
-    "welcome_sign": "Welcome to Shree Parth Academy Admin Panel",
-    "site_logo": "fa-solid fa-graduation-cap",
-    "login_logo": "fa-solid fa-graduation-cap",
-    "copyright": "Shree Parth Academy",
-    "theme": "cosmo",
-    "custom_css": "admin/css/custom_admin.css",  # Options: cosmo, flatly, darkly, litera, lumen, minty, pulse, sandstone, simplex, sketchy, spacelab, united, yeti
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
+
