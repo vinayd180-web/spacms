@@ -1,0 +1,21 @@
+{
+  "name": "Shree Parth Academy",
+  "short_name": "SPA",
+  "description": "School Management System for Shree Parth Academy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#B8922E",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
