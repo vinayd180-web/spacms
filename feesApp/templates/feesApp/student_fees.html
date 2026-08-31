@@ -51,7 +51,7 @@
             <td>
                 {% if fee.status == 'pending' %}
                 <a href="upi://pay?pa={{ upi_id }}&pn=ShreeParthAcademy&am={{ fee.amount }}&cu=INR" class="btn btn-primary btn-sm">Pay via UPI</a>
-                <a href="https://wa.me/{{ whatsapp_number }}?text=Hi,%20I%20have%20paid%20fees%20of%20{{ fee.amount }}.%20Receipt%20attached." target="_blank" class="btn btn-success btn-sm">Submit Receipt on WhatsApp</a>
+                <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" class="btn btn-success btn-sm">Submit Receipt on WhatsApp</a>
                 {% else %}
                 <span class="text-success">Paid</span>
                 {% endif %}
