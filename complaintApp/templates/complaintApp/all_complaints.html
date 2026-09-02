@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}All Complaints{% endblock %}
+{% block content %}
+<h2>All Complaints</h2>
+<table class="table">
+    <thead><tr><th>Title</th><th>Filed By</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+    <tbody>
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.filed_by }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.created_at|date:"d M Y" }}</td>
+            <td><a href="{% url 'resolve_complaint' c.id %}" class="btn btn-sm btn-warning">Resolve</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

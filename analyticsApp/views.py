@@ -57,16 +57,21 @@ from attendanceApp.models import Attendance
 def student_analytics(request):
     student = Student.objects.get(user=request.user)
     fees_list = Fees.objects.filter(student=student)
-    total_fees = sum(f.amount for f in fees_list)
+    course_fees = student.class_room.fees if student.class_room else 0
     paid_fees = sum(f.amount for f in fees_list if f.status == 'paid')
-    pending_fees = total_fees - paid_fees
+    pending_fees = max(course_fees - paid_fees, 0)
+    total_fees = course_fees
 
-    results = Result.objects.filter(student=student)
-    avg_marks = results.aggregate(Avg('marks'))['marks__avg'] or 0
+    results = Result.objects.filter(student=student).select_related('exam')
+    subject_names = [r.exam.subject for r in results]
+    subject_marks = [float(r.marks) for r in results]
+    avg_marks = sum(subject_marks) / len(subject_marks) if subject_marks else 0
 
     attendance = Attendance.objects.filter(student=student)
     total_attendance = attendance.count()
     present_count = attendance.filter(status='present').count()
+    absent_count = attendance.filter(status='absent').count()
+    late_count = attendance.filter(status='late').count()
     attendance_percentage = (present_count / total_attendance * 100) if total_attendance else 0
 
     return render(request, 'analyticsApp/student_dashboard.html', {
@@ -77,5 +82,9 @@ def student_analytics(request):
         'avg_marks': avg_marks,
         'total_attendance': total_attendance,
         'present_count': present_count,
+        'absent_count': absent_count,
+        'late_count': late_count,
         'attendance_percentage': attendance_percentage,
+        'subject_names': subject_names,
+        'subject_marks': subject_marks,
     })

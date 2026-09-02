@@ -28,3 +28,15 @@ def backup_data(request):
             return response
     
     return render(request, 'backupApp/backup.html')
+
+@staff_member_required
+def restore_data(request):
+    if request.method == 'POST' and request.FILES.get('backup_file'):
+        import json
+        from django.core.management import call_command
+        file = request.FILES['backup_file']
+        data = json.loads(file.read().decode('utf-8'))
+        call_command('loaddata', file.temporary_file_path() if hasattr(file, 'temporary_file_path') else None)
+        messages.success(request, "Data restored successfully!")
+        return redirect('restore_data')
+    return render(request, 'backupApp/restore.html')

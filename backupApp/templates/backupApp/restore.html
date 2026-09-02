@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Restore Data{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card mx-auto" style="max-width: 500px;">
+        <div class="card-header bg-success text-white">
+            <h4>Restore Data</h4>
+        </div>
+        <div class="card-body text-center">
+            <p>Upload backup file to restore all data.</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="backup_file" class="form-control mb-3" accept=".json" required>
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-upload"></i> Restore Data
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

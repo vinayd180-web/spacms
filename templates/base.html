@@ -28,21 +28,29 @@
 <link rel="apple-touch-icon" href="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png">
 
 
+
+
 <style>
     @media print {
-        .navbar, footer, .btn, .alert, .floating-btn, form {
-            display: none !important;
+        body * {
+            visibility: hidden;
         }
-        .container {
-            width: 100%;
-            max-width: 100%;
-        }
-        body {
-            background: white;
-            color: black;
+        .card, .card * {
+            visibility: visible;
         }
         .card {
-            border: 2px solid #000;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            border: none !important;
+        }
+        .navbar, footer, .btn, .alert, .floating-btn, .row.mb-4, form, h2 {
+            display: none !important;
+        }
+        @page {
+            size: A4;
+            margin: 10mm;
         }
     }
 </style>
@@ -78,6 +86,7 @@
                                 <li><a class="dropdown-item" href="{% url 'student_fees' %}">My Fees</a></li>
                                 <li><a class="dropdown-item" href="{% url 'payment_gateway' %}">Pay Fee</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_results' %}">My Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'report_card' %}">Report Card</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_analytics' %}">My Analytics</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
@@ -85,6 +94,7 @@
                                 <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
+                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}">File Complaint</a></li>
                             {% elif user.role == 'teacher' %}
                                 <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
@@ -99,17 +109,21 @@
                                 <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}">Student ID Cards</a></li>
                                 <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}">Analytics</a></li>
                                 <li><a class="dropdown-item" href="{% url 'backup_data' %}">Backup Data</a></li>
-                                <li><a class="dropdown-item" href="https://wa.me/919011395913" target="_blank">WhatsApp</a></li>
-                                <li><a class="dropdown-item" href="https://t.me/ShreeParthAcademy" target="_blank">Telegram</a></li>
+                                <li><a class="dropdown-item" href="{% url 'restore_data' %}">Restore Data</a></li>
+                                
+                                
                                 <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}">Timetable Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}">Work Log Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}">Attendance Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}">Take Attendance</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}">Homework Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
                                 <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
+                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}">Complaints</a></li>
+                                <li><a class="dropdown-item" href="{% url 'broadcast' %}">Broadcast Message</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -124,6 +138,7 @@
                                 <li><a class="dropdown-item" href="{% url 'student_fees' %}">My Fees</a></li>
                                 <li><a class="dropdown-item" href="{% url 'payment_gateway' %}">Pay Fee</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_results' %}">My Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'report_card' %}">Report Card</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_analytics' %}">My Analytics</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
@@ -131,6 +146,7 @@
                                 <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
+                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}">File Complaint</a></li>
                             {% elif user.role == 'teacher' %}
                                 <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
@@ -145,17 +161,21 @@
                                 <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}">Student ID Cards</a></li>
                                 <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}">Analytics</a></li>
                                 <li><a class="dropdown-item" href="{% url 'backup_data' %}">Backup Data</a></li>
-                                <li><a class="dropdown-item" href="https://wa.me/919011395913" target="_blank">WhatsApp</a></li>
-                                <li><a class="dropdown-item" href="https://t.me/ShreeParthAcademy" target="_blank">Telegram</a></li>
+                                <li><a class="dropdown-item" href="{% url 'restore_data' %}">Restore Data</a></li>
+                                
+                                
                                 <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}">Timetable Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}">Work Log Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}">Attendance Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}">Take Attendance</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}">Homework Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
                                 <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
+                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}">Complaints</a></li>
+                                <li><a class="dropdown-item" href="{% url 'broadcast' %}">Broadcast Message</a></li>
                             {% endif %}
                         </ul>
                     </li>

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Report Card{% endblock %}
+{% block content %}
+<div class="card mx-auto" style="max-width: 700px; border: 3px solid #000;">
+    <div class="card-body text-center">
+        <!-- Academy Header -->
+        <img src="https://i.postimg.cc/6y1ZG0hj/SHREE-PARTH-ACADEMY-84-x-44.png" alt="Logo" height="70">
+        <h2>Shree Parth Academy</h2>
+        <p>✦ AN EMPEROR OF KNOWLEDGE ✦</p>
+        <hr>
+        <h3>REPORT CARD</h3>
+        <hr>
+        
+        <!-- Student Details -->
+        <div class="row text-start mb-3">
+            <div class="col-6"><strong>Name:</strong> {{ student.user.get_full_name|default:student.user.username }}</div>
+            <div class="col-6"><strong>Student ID:</strong> {{ student.id }}</div>
+            <div class="col-6"><strong>Class:</strong> {{ student.class_room }}</div>
+            <div class="col-6"><strong>Roll No:</strong> {{ student.roll_number|default:"N/A" }}</div>
+        </div>
+        
+        <!-- Marks Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr><th>Subject</th><th>Max Marks</th><th>Marks Obtained</th><th>Grade</th></tr>
+            </thead>
+            <tbody>
+                {% for r in results %}
+                <tr>
+                    <td>{{ r.exam.subject }}</td>
+                    <td>{{ r.exam.max_marks }}</td>
+                    <td>{{ r.marks }}</td>
+                    <td>
+                        {% if r.marks >= 90 %}A+
+                        {% elif r.marks >= 80 %}A
+                        {% elif r.marks >= 70 %}B
+                        {% elif r.marks >= 60 %}C
+                        {% elif r.marks >= 50 %}D
+                        {% else %}F{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No results.</td></tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th>{{ max_marks }}</th>
+                    <th>{{ total_marks }}</th>
+                    <th>{{ grade }}</th>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <!-- Summary -->
+        <div class="row">
+            <div class="col-4"><strong>Percentage:</strong> {{ percentage|floatformat:2 }}%</div>
+            <div class="col-4"><strong>Grade:</strong> {{ grade }}</div>
+            <div class="col-4"><strong>Result:</strong> {% if grade == 'F' %}Fail{% else %}Pass{% endif %}</div>
+        </div>
+    </div>
+</div>
+<button onclick="window.print()" class="btn btn-primary mt-3">Print Report Card</button>
+{% endblock %}

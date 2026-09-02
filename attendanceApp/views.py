@@ -59,3 +59,32 @@ def teacher_attendance_history(request):
     teacher = get_object_or_404(Teacher, user=request.user)
     attendances = Attendance.objects.filter(teacher=teacher).order_by('-date')
     return render(request, 'attendanceApp/teacher_attendance_history.html', {'attendances': attendances})
+
+@staff_member_required
+def admin_take_attendance(request):
+    classes = ClassRoom.objects.all()
+    if request.method == 'POST':
+        class_id = request.POST.get('class_room')
+        date = request.POST.get('date')
+        return redirect('admin_mark_attendance', class_id=class_id, date=date)
+    return render(request, 'attendanceApp/admin_take_attendance.html', {'classes': classes})
+
+@staff_member_required
+def admin_mark_attendance(request, class_id, date):
+    classroom = get_object_or_404(ClassRoom, id=class_id)
+    students = Student.objects.filter(class_room=classroom)
+    if request.method == 'POST':
+        for student in students:
+            status = request.POST.get(f"status_{student.id}")
+            Attendance.objects.update_or_create(
+                student=student,
+                date=date,
+                defaults={"status": status},
+            )
+        messages.success(request, "Attendance saved successfully!")
+        return redirect('admin_attendance_list')
+    return render(request, 'attendanceApp/admin_mark_attendance.html', {
+        'classroom': classroom,
+        'students': students,
+        'date': date,
+    })

@@ -41,6 +41,8 @@ urlpatterns = [
     path('quiz/', include('quizApp.urls')),
     path('live-classes/', include('liveClassApp.urls')),
     path('events/', include('eventApp.urls')),
+    path('complaints/', include('complaintApp.urls')),
+    path('communication/', include('communicationApp.urls')),
     path('results/', include('resultsApp.urls')),
     path('students/', include('studentsApp.urls')),
     path('teachers/', include('teachersApp.urls')),

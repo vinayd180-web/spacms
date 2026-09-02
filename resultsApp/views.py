@@ -45,3 +45,31 @@ def admin_update_result(request, result_id):
         result.save()
         return redirect('admin_results_list')
     return render(request, 'resultsApp/admin_update_result.html', {'result': result})
+
+@login_required
+def report_card(request):
+    student = get_object_or_404(Student, user=request.user)
+    results = Result.objects.filter(student=student).select_related('exam')
+    total_marks = sum(r.marks for r in results)
+    max_marks = sum(r.exam.max_marks for r in results if r.exam.max_marks)
+    percentage = (total_marks / max_marks * 100) if max_marks else 0
+    if percentage >= 90:
+        grade = "A+"
+    elif percentage >= 80:
+        grade = "A"
+    elif percentage >= 70:
+        grade = "B"
+    elif percentage >= 60:
+        grade = "C"
+    elif percentage >= 50:
+        grade = "D"
+    else:
+        grade = "F"
+    return render(request, 'resultsApp/report_card.html', {
+        'student': student,
+        'results': results,
+        'total_marks': total_marks,
+        'max_marks': max_marks,
+        'percentage': percentage,
+        'grade': grade,
+    })

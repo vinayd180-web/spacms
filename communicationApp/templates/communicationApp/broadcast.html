@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Broadcast Message{% endblock %}
+{% block content %}
+<h2>Broadcast Message</h2>
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}{{ m }}{% endfor %}
+</div>
+{% endif %}
+
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    <label>Message</label>
+    <textarea name="message" class="form-control mb-2" required placeholder="Type your message..."></textarea>
+    <label>Platform</label>
+    <select name="platform" class="form-control mb-2" required>
+        <option value="whatsapp">WhatsApp</option>
+        <option value="telegram">Telegram</option>
+    </select>
+    <label>Send To</label>
+    <select name="target" class="form-control mb-2" required>
+        <option value="students">Students</option>
+        <option value="teachers">Teachers</option>
+        <option value="parents">Parents</option>
+        <option value="all">All Users</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Prepare Broadcast</button>
+</form>
+
+{% if whatsapp_link %}
+<div class="alert alert-info">
+    <p><strong>WhatsApp Broadcast ready!</strong></p>
+    <a href="{{ whatsapp_link }}" target="_blank" class="btn btn-success">Open WhatsApp</a>
+</div>
+{% endif %}
+
+{% if telegram_link %}
+<div class="alert alert-info">
+    <p><strong>Telegram Broadcast ready!</strong></p>
+    <a href="{{ telegram_link }}" target="_blank" class="btn btn-info">Open Telegram</a>
+</div>
+{% endif %}
+{% endblock %}

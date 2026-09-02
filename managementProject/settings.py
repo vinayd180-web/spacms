@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     "quizApp",
     "liveClassApp",
     "eventApp",
+    "complaintApp",
+    "communicationApp",
     "social_django",
 ]
 

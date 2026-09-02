@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}My Complaints{% endblock %}
+{% block content %}
+<h2>My Complaints</h2>
+<table class="table">
+    <thead><tr><th>Title</th><th>Status</th><th>Response</th><th>Date</th></tr></thead>
+    <tbody>
+        {% for c in complaints %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.admin_response|default:"-" }}</td>
+            <td>{{ c.created_at|date:"d M Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No complaints filed.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Take Attendance{% endblock %}
+{% block content %}
+<h2>Take Attendance (Admin)</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Select Class</label>
+    <select name="class_room" class="form-control mb-2" required>
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <label>Select Date</label>
+    <input type="date" name="date" class="form-control mb-2" required>
+    <button type="submit" class="btn btn-primary">Show Students</button>
+</form>
+{% endblock %}
