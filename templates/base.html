@@ -83,12 +83,15 @@
                                 <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
                                 <li><a class="dropdown-item" href="{% url 'my_notifications' %}">Notifications</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
                             {% elif user.role == 'teacher' %}
                                 <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}">Take Attendance</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}">Attendance History</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_homework' %}">Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}">Live Classes</a></li>
                             {% elif user.role == 'admin' %}
                                 <li><a class="dropdown-item" href="/admin/" target="_blank">Admin Panel</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}">Fees Management</a></li>
@@ -105,6 +108,8 @@
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -124,12 +129,15 @@
                                 <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
                                 <li><a class="dropdown-item" href="{% url 'my_notifications' %}">Notifications</a></li>
                                 <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
                             {% elif user.role == 'teacher' %}
                                 <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}">Take Attendance</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}">Attendance History</a></li>
                                 <li><a class="dropdown-item" href="{% url 'teacher_homework' %}">Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}">Live Classes</a></li>
                             {% elif user.role == 'admin' %}
                                 <li><a class="dropdown-item" href="/admin/" target="_blank">Admin Panel</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}">Fees Management</a></li>
@@ -146,6 +154,8 @@
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
                                 <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
                             {% endif %}
                         </ul>
                     </li>

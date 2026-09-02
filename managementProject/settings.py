@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # Cloudinary apps (optional) — enabled when CLOUDINARY_URL is set below
     "cloudinary",
     "cloudinary_storage",
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
     "homeworkApp",
     "notificationApp",
     "quizApp",
+    "liveClassApp",
+    "eventApp",
     "social_django",
 ]
 
@@ -158,6 +161,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = "/data/data/com.termux/files/home/Scholaroid/staticfiles"
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -201,3 +205,14 @@ USE_X_FORWARDED_HOST = True
 
 
 
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Shree Parth Academy Admin",
+    "site_header": "Shree Parth Academy",
+    "site_brand": "Shree Parth Academy",
+    "welcome_sign": "Welcome to Shree Parth Academy Admin Panel",
+    "copyright": "Shree Parth Academy",
+    "theme": "cosmo",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}

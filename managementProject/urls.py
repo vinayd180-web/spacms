@@ -39,6 +39,8 @@ urlpatterns = [
     path('homework/', include('homeworkApp.urls')),
     path('notifications/', include('notificationApp.urls')),
     path('quiz/', include('quizApp.urls')),
+    path('live-classes/', include('liveClassApp.urls')),
+    path('events/', include('eventApp.urls')),
     path('results/', include('resultsApp.urls')),
     path('students/', include('studentsApp.urls')),
     path('teachers/', include('teachersApp.urls')),

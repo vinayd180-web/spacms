@@ -8,7 +8,8 @@ class Fees(models.Model):
         ('paid', 'Paid'),
     ]
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='fees')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    total_fees = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="Total course fees")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, help_text="Paid amount")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     due_date = models.DateField(null=True, blank=True)
     paid_date = models.DateField(null=True, blank=True)

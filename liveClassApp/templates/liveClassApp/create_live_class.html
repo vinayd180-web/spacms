@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Create Live Class{% endblock %}
+{% block content %}
+<h2>Create Live Class</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Class Title" class="form-control mb-2" required>
+    <textarea name="description" placeholder="Description" class="form-control mb-2"></textarea>
+    <select name="class_room" class="form-control mb-2" required>
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+    <select name="teacher" class="form-control mb-2" required>
+        {% for t in teachers %}
+        <option value="{{ t.id }}">{{ t.user.get_full_name|default:t.user.username }}</option>
+        {% endfor %}
+    </select>
+    <input type="url" name="meeting_link" placeholder="Meeting Link (Google Meet/Zoom)" class="form-control mb-2" required>
+    <input type="date" name="date" class="form-control mb-2" required>
+    <input type="time" name="start_time" class="form-control mb-2" required>
+    <input type="time" name="end_time" class="form-control mb-2" required>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+{% endblock %}

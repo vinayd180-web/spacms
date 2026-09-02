@@ -11,9 +11,10 @@ WHATSAPP_NUMBER = "919011395913"
 def student_fees(request):
     student = get_object_or_404(Student, user=request.user)
     fees_list = Fees.objects.filter(student=student).order_by('-due_date')
-    total_fees = sum(fee.amount for fee in fees_list)
+    course_fees = student.class_room.fees if student.class_room else 0
     paid_fees = sum(fee.amount for fee in fees_list if fee.status == 'paid')
-    pending_fees = total_fees - paid_fees
+    pending_fees = max(course_fees - paid_fees, 0) if course_fees > 0 else 0
+    total_fees = course_fees
 
     return render(request, 'feesApp/student_fees.html', {
         'fees_list': fees_list,
@@ -31,14 +32,29 @@ def student_id_card(request):
 
 @staff_member_required
 def admin_fees_list(request):
-    fees_list = Fees.objects.select_related('student').all().order_by('status', 'student')
-    return render(request, 'feesApp/admin_fees_list.html', {'fees_list': fees_list})
+    from studentsApp.models import Student
+    students = Student.objects.select_related('class_room').all()
+    fees_summary = []
+    for student in students:
+        fees = Fees.objects.filter(student=student)
+        total_fees = student.class_room.fees if student.class_room else 0
+        paid_fees = sum(f.amount for f in fees if f.status == 'paid')
+        pending = max(total_fees - paid_fees, 0)
+        fees_summary.append({
+            'student': student,
+            'total_fees': total_fees,
+            'paid_fees': paid_fees,
+            'pending': pending,
+            'fees_list': fees.order_by('-created_at'),
+        })
+    return render(request, 'feesApp/admin_fees_list.html', {'fees_summary': fees_summary})
 
 @staff_member_required
 def admin_fees_update(request, fees_id):
     fee = get_object_or_404(Fees, id=fees_id)
     if request.method == 'POST':
         fee.status = request.POST.get('status')
+        fee.total_fees = fee.student.class_room.fees if fee.student.class_room else fee.total_fees
         fee.transaction_id = request.POST.get('transaction_id', '')
         fee.save()
         return redirect('admin_fees_list')

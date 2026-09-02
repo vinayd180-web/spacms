@@ -1,20 +1,56 @@
 {% extends 'base.html' %}
 {% block title %}Fees Management{% endblock %}
 {% block content %}
-<h2>Fees Management</h2>
-<table class="table">
+<h2>Student-wise Fees History</h2>
+
+<table class="table table-bordered">
     <thead>
-        <tr><th>Student</th><th>Amount</th><th>Status</th><th>Due Date</th><th>Action</th></tr>
+        <tr>
+            <th>Student</th>
+            <th>Class</th>
+            <th>Total Fees</th>
+            <th>Paid Fees</th>
+            <th>Pending</th>
+            <th>History</th>
+        </tr>
     </thead>
     <tbody>
-        {% for fee in fees_list %}
+        {% for item in fees_summary %}
         <tr>
-            <td>{{ fee.student }}</td>
-            <td>{{ fee.amount }}</td>
-            <td>{{ fee.status }}</td>
-            <td>{{ fee.due_date }}</td>
-            <td><a href="{% url 'admin_fees_update' fee.id %}" class="btn btn-sm btn-warning">Update</a></td>
+            <td>{{ item.student }}</td>
+            <td>{{ item.student.class_room }}</td>
+            <td>₹{{ item.total_fees }}</td>
+            <td>₹{{ item.paid_fees }}</td>
+            <td>₹{{ item.pending }}</td>
+            <td>
+                <button class="btn btn-sm btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#history{{ item.student.id }}">
+                    View History
+                </button>
+            </td>
         </tr>
+        <tr class="collapse" id="history{{ item.student.id }}">
+            <td colspan="6">
+                <table class="table table-sm">
+                    <thead>
+                        <tr><th>Date</th><th>Amount</th><th>Status</th><th>Transaction ID</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for fee in item.fees_list %}
+                        <tr>
+                            <td>{{ fee.created_at|date:"d M Y" }}</td>
+                            <td>₹{{ fee.amount }}</td>
+                            <td>{{ fee.status }}</td>
+                            <td>{{ fee.transaction_id|default:"-" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4">No payments</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No students found.</td></tr>
         {% endfor %}
     </tbody>
 </table>
