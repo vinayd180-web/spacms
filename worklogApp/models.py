@@ -10,6 +10,7 @@ class WorkLog(models.Model):
     class_room = models.ForeignKey(ClassRoom, on_delete=models.SET_NULL, null=True, blank=True)
     subject = models.CharField(max_length=100)
     syllabus_covered = models.TextField()
+    hours_worked = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text="Total hours worked")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -54,6 +54,82 @@
         }
     }
 </style>
+
+
+
+<style>
+    .theme-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #B8922E, #0D9488);
+        color: white;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 9999;
+    }
+    .theme-btn:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<style>
+    :root {
+        --primary: #B8922E;
+        --secondary: #0D9488;
+        --text: #000000;
+    }
+    [data-theme="light-purple"] {
+        --primary: #C084FC;
+        --secondary: #A855F7;
+        --text: #000000;
+    }
+    [data-theme="soft-blue"] {
+        --primary: #93C5FD;
+        --secondary: #60A5FA;
+        --text: #000000;
+    }
+    [data-theme="soft-green"] {
+        --primary: #86EFAC;
+        --secondary: #4ADE80;
+        --text: #000000;
+    }
+    [data-theme="soft-pink"] {
+        --primary: #F9A8D4;
+        --secondary: #F472B6;
+        --text: #000000;
+    }
+    [data-theme="soft-orange"] {
+        --primary: #FDBA74;
+        --secondary: #FB923C;
+        --text: #000000;
+    }
+    .navbar {
+        background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    }
+    .navbar .nav-link, .navbar-brand {
+        color: var(--text) !important;
+        font-weight: 600;
+    }
+    .card-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+        color: var(--text) !important;
+    }
+    .btn-primary {
+        background: var(--primary) !important;
+        border-color: var(--primary) !important;
+        color: var(--text) !important;
+    }
+    .dropdown-item:hover {
+        background: var(--primary) !important;
+        color: var(--text) !important;
+    }
+</style>
 </head>
 <body class="{% if user.is_authenticated %}{{ user.role|lower }}{% endif %}">
 
@@ -83,47 +159,47 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             {% if user.role == 'student' %}
-                                <li><a class="dropdown-item" href="{% url 'student_fees' %}">My Fees</a></li>
-                                <li><a class="dropdown-item" href="{% url 'payment_gateway' %}">Pay Fee</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_results' %}">My Results</a></li>
-                                <li><a class="dropdown-item" href="{% url 'report_card' %}">Report Card</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_analytics' %}">My Analytics</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_timetable' %}">My Timetable</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
-                                <li><a class="dropdown-item" href="{% url 'my_notifications' %}">Notifications</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
-                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}">File Complaint</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_fees' %}"><i class="bi bi-wallet2 me-2"></i>My Fees</a></li>
+                                <li><a class="dropdown-item" href="{% url 'payment_gateway' %}"><i class="bi bi-credit-card me-2"></i>Pay Fee</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_results' %}"><i class="bi bi-file-earmark-text me-2"></i>My Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'report_card' %}"><i class="bi bi-award me-2"></i>Report Card</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_analytics' %}"><i class="bi bi-graph-up me-2"></i>My Analytics</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_timetable' %}"><i class="bi bi-calendar3 me-2"></i>My Timetable</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_homework' %}"><i class="bi bi-journal-check me-2"></i>My Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'my_notifications' %}"><i class="bi bi-bell me-2"></i>Notifications</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_quizzes' %}"><i class="bi bi-patch-question me-2"></i>Quizzes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'event_list' %}"><i class="bi bi-calendar-event me-2"></i>Events</a></li>
+                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}"><i class="bi bi-chat-dots me-2"></i>File Complaint</a></li>
                             {% elif user.role == 'teacher' %}
-                                <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}">Take Attendance</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}">Attendance History</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_homework' %}">Homework</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}"><i class="bi bi-calendar3 me-2"></i>My Timetable</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}"><i class="bi bi-clipboard-check me-2"></i>My Work Log</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}"><i class="bi bi-person-check me-2"></i>Take Attendance</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}"><i class="bi bi-clock-history me-2"></i>Attendance History</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_homework' %}"><i class="bi bi-journal-check me-2"></i>Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
                             {% elif user.role == 'admin' %}
-                                <li><a class="dropdown-item" href="/admin/" target="_blank">Admin Panel</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}">Fees Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_results_list' %}">Results Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}">Student ID Cards</a></li>
-                                <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}">Analytics</a></li>
-                                <li><a class="dropdown-item" href="{% url 'backup_data' %}">Backup Data</a></li>
-                                <li><a class="dropdown-item" href="{% url 'restore_data' %}">Restore Data</a></li>
+                                <li><a class="dropdown-item" href="/admin/" target="_blank"><i class="bi bi-speedometer2 me-2"></i>Admin Panel</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}"><i class="bi bi-wallet2 me-2"></i>Fees Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_results_list' %}"><i class="bi bi-file-earmark-text me-2"></i>Results Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}"><i class="bi bi-person-badge me-2"></i>Student ID Cards</a></li>
+                                <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}"><i class="bi bi-graph-up me-2"></i>Analytics</a></li>
+                                <li><a class="dropdown-item" href="{% url 'backup_data' %}"><i class="bi bi-download me-2"></i>Backup Data</a></li>
+                                <li><a class="dropdown-item" href="{% url 'restore_data' %}"><i class="bi bi-upload me-2"></i>Restore Data</a></li>
                                 
                                 
-                                <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}">Timetable Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}">Work Log Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}">Attendance Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}">Take Attendance</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}">Homework Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}"><i class="bi bi-calendar3 me-2"></i>Timetable Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}"><i class="bi bi-clipboard-check me-2"></i>Work Log Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}"><i class="bi bi-person-check me-2"></i>Attendance Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}"><i class="bi bi-person-check me-2"></i>Take Attendance</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}"><i class="bi bi-journal-check me-2"></i>Homework Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
-                                <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
-                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
-                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}">Complaints</a></li>
-                                <li><a class="dropdown-item" href="{% url 'broadcast' %}">Broadcast Message</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_quiz' %}"><i class="bi bi-patch-question me-2"></i>Create Quiz</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}"><i class="bi bi-bar-chart me-2"></i>Quiz Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_event' %}"><i class="bi bi-calendar-event me-2"></i>Create Event</a></li>
+                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}"><i class="bi bi-chat-dots me-2"></i>Complaints</a></li>
+                                <li><a class="dropdown-item" href="{% url 'broadcast' %}"><i class="bi bi-megaphone me-2"></i>Broadcast Message</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -135,47 +211,47 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="menuDropdown">
                             {% if user.role == 'student' %}
-                                <li><a class="dropdown-item" href="{% url 'student_fees' %}">My Fees</a></li>
-                                <li><a class="dropdown-item" href="{% url 'payment_gateway' %}">Pay Fee</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_results' %}">My Results</a></li>
-                                <li><a class="dropdown-item" href="{% url 'report_card' %}">Report Card</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_analytics' %}">My Analytics</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_timetable' %}">My Timetable</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_homework' %}">My Homework</a></li>
-                                <li><a class="dropdown-item" href="{% url 'my_notifications' %}">Notifications</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_quizzes' %}">Quizzes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}">Live Classes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'event_list' %}">Events</a></li>
-                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}">File Complaint</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_fees' %}"><i class="bi bi-wallet2 me-2"></i>My Fees</a></li>
+                                <li><a class="dropdown-item" href="{% url 'payment_gateway' %}"><i class="bi bi-credit-card me-2"></i>Pay Fee</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_results' %}"><i class="bi bi-file-earmark-text me-2"></i>My Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'report_card' %}"><i class="bi bi-award me-2"></i>Report Card</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_analytics' %}"><i class="bi bi-graph-up me-2"></i>My Analytics</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_timetable' %}"><i class="bi bi-calendar3 me-2"></i>My Timetable</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_homework' %}"><i class="bi bi-journal-check me-2"></i>My Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'my_notifications' %}"><i class="bi bi-bell me-2"></i>Notifications</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_quizzes' %}"><i class="bi bi-patch-question me-2"></i>Quizzes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'student_live_classes' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'event_list' %}"><i class="bi bi-calendar-event me-2"></i>Events</a></li>
+                                <li><a class="dropdown-item" href="{% url 'file_complaint' %}"><i class="bi bi-chat-dots me-2"></i>File Complaint</a></li>
                             {% elif user.role == 'teacher' %}
-                                <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}">My Timetable</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}">My Work Log</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}">Take Attendance</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}">Attendance History</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_homework' %}">Homework</a></li>
-                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}">Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_timetable' %}"><i class="bi bi-calendar3 me-2"></i>My Timetable</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_worklog' %}"><i class="bi bi-clipboard-check me-2"></i>My Work Log</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_attendance' %}"><i class="bi bi-person-check me-2"></i>Take Attendance</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_attendance_history' %}"><i class="bi bi-clock-history me-2"></i>Attendance History</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_homework' %}"><i class="bi bi-journal-check me-2"></i>Homework</a></li>
+                                <li><a class="dropdown-item" href="{% url 'teacher_live_classes' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
                             {% elif user.role == 'admin' %}
-                                <li><a class="dropdown-item" href="/admin/" target="_blank">Admin Panel</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}">Fees Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_results_list' %}">Results Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}">Student ID Cards</a></li>
-                                <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}">Analytics</a></li>
-                                <li><a class="dropdown-item" href="{% url 'backup_data' %}">Backup Data</a></li>
-                                <li><a class="dropdown-item" href="{% url 'restore_data' %}">Restore Data</a></li>
+                                <li><a class="dropdown-item" href="/admin/" target="_blank"><i class="bi bi-speedometer2 me-2"></i>Admin Panel</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_fees_list' %}"><i class="bi bi-wallet2 me-2"></i>Fees Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_results_list' %}"><i class="bi bi-file-earmark-text me-2"></i>Results Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_student_id_cards' %}"><i class="bi bi-person-badge me-2"></i>Student ID Cards</a></li>
+                                <li><a class="dropdown-item" href="{% url 'analytics_dashboard' %}"><i class="bi bi-graph-up me-2"></i>Analytics</a></li>
+                                <li><a class="dropdown-item" href="{% url 'backup_data' %}"><i class="bi bi-download me-2"></i>Backup Data</a></li>
+                                <li><a class="dropdown-item" href="{% url 'restore_data' %}"><i class="bi bi-upload me-2"></i>Restore Data</a></li>
                                 
                                 
-                                <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}">Timetable Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}">Work Log Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}">Attendance Management</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}">Take Attendance</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}">Homework Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_timetable_list' %}"><i class="bi bi-calendar3 me-2"></i>Timetable Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_worklog_list' %}"><i class="bi bi-clipboard-check me-2"></i>Work Log Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_attendance_list' %}"><i class="bi bi-person-check me-2"></i>Attendance Management</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_take_attendance' %}"><i class="bi bi-person-check me-2"></i>Take Attendance</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_homework_list' %}"><i class="bi bi-journal-check me-2"></i>Homework Management</a></li>
                                 <li><a class="dropdown-item" href="{% url 'send_notification' %}">Send Notification</a></li>
-                                <li><a class="dropdown-item" href="{% url 'create_quiz' %}">Create Quiz</a></li>
-                                <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}">Quiz Results</a></li>
-                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}">Live Classes</a></li>
-                                <li><a class="dropdown-item" href="{% url 'create_event' %}">Create Event</a></li>
-                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}">Complaints</a></li>
-                                <li><a class="dropdown-item" href="{% url 'broadcast' %}">Broadcast Message</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_quiz' %}"><i class="bi bi-patch-question me-2"></i>Create Quiz</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_quiz_results' %}"><i class="bi bi-bar-chart me-2"></i>Quiz Results</a></li>
+                                <li><a class="dropdown-item" href="{% url 'live_class_list' %}"><i class="bi bi-camera-video me-2"></i>Live Classes</a></li>
+                                <li><a class="dropdown-item" href="{% url 'create_event' %}"><i class="bi bi-calendar-event me-2"></i>Create Event</a></li>
+                                <li><a class="dropdown-item" href="{% url 'all_complaints' %}"><i class="bi bi-chat-dots me-2"></i>Complaints</a></li>
+                                <li><a class="dropdown-item" href="{% url 'broadcast' %}"><i class="bi bi-megaphone me-2"></i>Broadcast Message</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -291,6 +367,24 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+</script>
+
+<button class="theme-btn" onclick="switchTheme()" title="Change Theme">
+    <i class="bi bi-palette"></i>
+</button>
+
+<script>
+    function switchTheme() {
+        const themes = ['default', 'light-purple', 'soft-blue', 'soft-green', 'soft-pink', 'soft-orange'];
+        const current = document.documentElement.getAttribute('data-theme') || 'default';
+        const nextIndex = (themes.indexOf(current) + 1) % themes.length;
+        const nextTheme = themes[nextIndex];
+        if (nextTheme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', nextTheme);
+        }
+    }
 </script>
 </body>
 </html>

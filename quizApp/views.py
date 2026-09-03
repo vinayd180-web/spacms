@@ -42,7 +42,8 @@ def student_quizzes(request):
     student = get_object_or_404(Student, user=request.user)
     quizzes = Quiz.objects.filter(class_room=student.class_room)
     results = QuizResult.objects.filter(student=request.user)
-    return render(request, 'quizApp/student_quizzes.html', {'quizzes': quizzes, 'results': results})
+    taken_quiz_ids = list(results.values_list('quiz_id', flat=True))
+    return render(request, 'quizApp/student_quizzes.html', {'quizzes': quizzes, 'results': results, 'taken_quiz_ids': taken_quiz_ids})
 
 @login_required
 def take_quiz(request, quiz_id):

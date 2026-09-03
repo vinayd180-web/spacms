@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}Work Logs{% endblock %}
 {% block content %}
-<h2>All Work Logs</h2>
+<h2>Teacher Work Summary</h2>
+
+<!-- Payment Summary -->
+<table class="table table-bordered mb-4">
+    <thead>
+        <tr><th>Teacher</th><th>Monthly Hours</th><th>Days</th><th>Rate/hr</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+        {% for t in teacher_summary %}
+        <tr>
+            <td>{{ t.teacher }}</td>
+            <td>{{ t.total_hours }}</td>
+            <td>{{ t.total_days }}</td>
+            <td>₹{{ t.teacher.hourly_rate }}</td>
+            <td>₹{{ t.amount }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No teachers.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>All Work Logs</h3>
 <table class="table table-bordered">
     <thead>
-        <tr><th>Teacher</th><th>Date</th><th>In</th><th>Out</th><th>Class</th><th>Subject</th><th>Syllabus</th></tr>
+        <tr><th>Teacher</th><th>Date</th><th>In</th><th>Out</th><th>Hours</th><th>Subject</th><th>Syllabus</th></tr>
     </thead>
     <tbody>
         {% for w in worklogs %}
         <tr>
-            <td>{{ w.teacher.user.get_full_name|default:w.teacher.user.username }}</td>
+            <td>{{ w.teacher }}</td>
             <td>{{ w.date }}</td>
             <td>{{ w.in_time }}</td>
             <td>{{ w.out_time }}</td>
-            <td>{{ w.class_room }}</td>
+            <td>{{ w.hours_worked }}</td>
             <td>{{ w.subject }}</td>
-            <td>{{ w.syllabus_covered|truncatechars:50 }}</td>
+            <td>{{ w.syllabus_covered|truncatechars:30 }}</td>
         </tr>
-        {% empty %}
-        <tr><td colspan="7">No work logs found.</td></tr>
         {% endfor %}
     </tbody>
 </table>

@@ -18,13 +18,11 @@
                 {% endfor %}
             </td>
             <td>
-                {% for r in results %}
-                    {% if r.quiz.id == q.id %}
-                        <span class="badge bg-success">Completed</span>
-                    {% else %}
-                        <a href="{% url 'take_quiz' q.id %}" class="btn btn-sm btn-primary">Take Quiz</a>
-                    {% endif %}
-                {% endfor %}
+                {% if q.id in taken_quiz_ids %}
+                    <span class="badge bg-success">Completed</span>
+                {% else %}
+                    <a href="{% url 'take_quiz' q.id %}" class="btn btn-sm btn-primary">Take Quiz</a>
+                {% endif %}
             </td>
         </tr>
         {% empty %}
