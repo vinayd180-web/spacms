@@ -1,38 +1,33 @@
 {% extends "admin/base.html" %}
-{% load static %}
 
 {% block extrastyle %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
     body {
-        font-family: 'Poppins', sans-serif;
-        background: #f5f5f5;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f8f9fa;
     }
     #header {
-        background: linear-gradient(135deg, #B8922E, #0D9488);
-        color: white;
-        padding: 15px 20px;
-    }
-    #header a {
-        color: white;
-    }
-    .module h2, .module caption {
-        background: #0D9488;
-        color: white;
-    }
-    .button, input[type="submit"], input[type="button"], .submit-row input {
         background: #B8922E;
         color: white;
-        border: none;
-        padding: 8px 15px;
+        padding: 12px 20px;
+    }
+    #header a, #header span {
+        color: white !important;
+    }
+    .module h2, .module caption {
+        background: #0D9488 !important;
+        color: white !important;
+    }
+    .button, input[type="submit"], .submit-row input {
+        background: #B8922E !important;
+        color: white !important;
         border-radius: 5px;
-        cursor: pointer;
     }
     .button:hover, input[type="submit"]:hover {
-        background: #0D9488;
+        background: #0D9488 !important;
     }
-    .dashboard #content {
-        width: auto;
+    div.breadcrumbs {
+        background: #f1f3f5;
     }
 </style>
 {% endblock %}
