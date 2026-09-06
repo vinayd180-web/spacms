@@ -130,6 +130,40 @@
         color: var(--text) !important;
     }
 </style>
+
+<style>
+    @media (max-width: 768px) {
+        .navbar-nav {
+            text-align: center;
+        }
+        .dropdown-menu {
+            position: static !important;
+            width: 100%;
+            border: none;
+            box-shadow: none;
+        }
+        .dropdown-item {
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+        .container {
+            padding: 10px;
+        }
+        .card {
+            margin-bottom: 15px;
+        }
+        .table {
+            font-size: 13px;
+        }
+        .btn {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        h1, h2, h3 {
+            font-size: 1.3rem;
+        }
+    }
+</style>
 </head>
 <body class="{% if user.is_authenticated %}{{ user.role|lower }}{% endif %}">
 
