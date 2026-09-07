@@ -10,10 +10,13 @@
 <div class="profile-wrapper">
   <div class="profile-card">
     <h2>My Profile</h2>
+<a href="{% url 'update_profile' %}" class="btn btn-primary mb-3">Update Photo / ID</a>
     <form method="post" enctype="multipart/form-data" novalidate>
       {% csrf_token %}
       <div class="avatar-wrapper" id="avatarWrapper" aria-label="Change profile photo" title="Click to change photo">
-        {% if form.instance.profile_photo %}
+        {% if user.profile_photo %}
+          <img src="{{ user.profile_photo.url }}" id="avatarPreview" alt="Profile Photo">
+        {% elif form.instance.profile_photo %}
           <img src="{{ form.instance.profile_photo.url }}" id="avatarPreview" alt="Profile Photo">
         {% else %}
           <div id="avatarPreview" class="avatar-initials">{{ form.instance.get_full_name|default:form.instance.username|slice:":1"|upper }}</div>

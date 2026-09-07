@@ -43,6 +43,7 @@ urlpatterns = [
     path('events/', include('eventApp.urls')),
     path('complaints/', include('complaintApp.urls')),
     path('communication/', include('communicationApp.urls')),
+    path('profile/', include('profileApp.urls')),
     path('results/', include('resultsApp.urls')),
     path('students/', include('studentsApp.urls')),
     path('teachers/', include('teachersApp.urls')),

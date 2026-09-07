@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "eventApp",
     "complaintApp",
     "communicationApp",
+    "profileApp",
     "social_django",
 ]
 
@@ -175,3 +176,7 @@ SESSION_ENGINE = config("SESSION_ENGINE", default="django.contrib.sessions.backe
 
 
 # Cloudinary Media Storage
+
+# Cloudinary Storage
+CLOUDINARY_URL = "cloudinary://958279997232778:sfTs0JcJJyxNl9a183ae8xsCbyk@bkpr8az9"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

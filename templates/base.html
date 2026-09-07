@@ -182,7 +182,8 @@
             <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="d-flex align-items-center text-decoration-none" href="{% url 'profile' %}">
+                        <a class="dropdown-item" href="{% url 'my_profile' %}"><i class="fas fa-user-circle me-2"></i>My Profile</a>
+                    <a class="d-flex align-items-center text-decoration-none" href="{% url 'profile' %}">
                             {% if user.profile_photo %}
                               <img src="{{ user.profile_photo.url }}" alt="avatar" class="avatar-40">
                             {% else %}
@@ -289,7 +290,8 @@
                             {% endif %}
                         </ul>
                     </li>
-                    <li class="nav-item ms-2"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                    
+                <li class="nav-item ms-2"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 {% endif %}

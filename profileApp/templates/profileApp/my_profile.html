@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<h2>My Profile</h2>
+
+<div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body text-center">
+        {% if profile.profile_photo %}
+        <img src="{{ profile.profile_photo.url }}" alt="Profile Photo" class="rounded-circle mb-3" width="120" height="120">
+        {% else %}
+        <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+            <span style="font-size: 40px;">{{ user.get_full_name|default:user.username|slice:':1'|upper }}</span>
+        </div>
+        {% endif %}
+        
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <p>{{ user.email }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+        
+        <a href="{% url 'update_profile' %}" class="btn btn-primary mt-2">
+            <i class="fas fa-camera"></i> Upload Photo
+        </a>
+    </div>
+</div>
+{% endblock %}
