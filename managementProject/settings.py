@@ -26,8 +26,6 @@ AUTH_USER_MODEL = "accountsApp.User"
 
 INSTALLED_APPS = [
     # Cloudinary apps (optional) — enabled when CLOUDINARY_URL is set below
-    "cloudinary",
-    "cloudinary_storage",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -178,7 +176,6 @@ SESSION_ENGINE = config("SESSION_ENGINE", default="django.contrib.sessions.backe
 # uploaded media will be stored on Cloudinary instead of the local filesystem.
 CLOUDINARY_URL = config("CLOUDINARY_URL", default="")
 if CLOUDINARY_URL:
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
     CLOUDINARY_STORAGE = {
         "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME", default=""),
         "API_KEY": config("CLOUDINARY_API_KEY", default=""),
