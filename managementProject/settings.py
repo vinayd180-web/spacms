@@ -215,3 +215,7 @@ JAZZMIN_SETTINGS = {
     "show_sidebar": True,
     "navigation_expanded": True,
 }
+
+CLOUDINARY_URL = "cloudinary://958279997232778:sfTs0JcJJyxNl9a183ae8xsCbyk@bkpr8az9"
+if CLOUDINARY_URL:
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
