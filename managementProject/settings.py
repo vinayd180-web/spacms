@@ -173,45 +173,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 WEBSOCKETS_ENABLED = config("WEBSOCKETS_ENABLED", default=True, cast=bool)
 SESSION_ENGINE = config("SESSION_ENGINE", default="django.contrib.sessions.backends.db")
 
-# Cloudinary (optional) — if you set CLOUDINARY_URL or the individual creds in env,
-# uploaded media will be stored on Cloudinary instead of the local filesystem.
 
 
-        "DEFAULT_FORMAT": "png",
-        "SECURE": True,
-    }
-
-
-EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="School Management <no-reply@example.com>")
-EMAIL_HOST = config("EMAIL_HOST", default="")
-EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
-
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-USE_X_FORWARDED_HOST = True
-
-
-
-
-
-JAZZMIN_SETTINGS = {
-    "site_title": "Shree Parth Academy Admin",
-    "site_header": "Shree Parth Academy",
-    "site_brand": "Shree Parth Academy",
-    "welcome_sign": "Welcome to Shree Parth Academy Admin Panel",
-    "copyright": "Shree Parth Academy",
-    "theme": "cosmo",
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
-
+# Cloudinary Media Storage
 CLOUDINARY_URL = "cloudinary://958279997232778:sfTs0JcJJyxNl9a183ae8xsCbyk@bkpr8az9"
-if CLOUDINARY_URL:
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
