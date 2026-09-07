@@ -175,7 +175,7 @@ SESSION_ENGINE = config("SESSION_ENGINE", default="django.contrib.sessions.backe
 
 # Cloudinary (optional) — if you set CLOUDINARY_URL or the individual creds in env,
 # uploaded media will be stored on Cloudinary instead of the local filesystem.
-CLOUDINARY_URL = config("CLOUDINARY_URL", default="")
+
 if CLOUDINARY_URL:
     CLOUDINARY_STORAGE = {
         "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME", default=""),
