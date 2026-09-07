@@ -25,7 +25,6 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 AUTH_USER_MODEL = "accountsApp.User"
 
 INSTALLED_APPS = [
-    # Cloudinary apps (optional) — enabled when CLOUDINARY_URL is set below
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -176,5 +175,3 @@ SESSION_ENGINE = config("SESSION_ENGINE", default="django.contrib.sessions.backe
 
 
 # Cloudinary Media Storage
-CLOUDINARY_URL = "cloudinary://958279997232778:sfTs0JcJJyxNl9a183ae8xsCbyk@bkpr8az9"
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
